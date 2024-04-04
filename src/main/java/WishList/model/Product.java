@@ -3,5 +3,5 @@ package WishList.model;
 public class Product {
     private String productName;
     private String productDescription;
-
+    private String productUrl;
 }
