@@ -1,0 +1,24 @@
+.rounded {
+    border-radius: 0.25rem;
+}
+body {
+    background-color: lightslategray;
+}
+.container-ting {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 10px;
+    width: 50%;
+}
+
+.container-title {
+
+}
+
+.input {
+
+
+}
+.input-form{
+    border: thick black;
+}

@@ -3,11 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Wishlist</title>
-
+    <link href="/main.css" rel="stylesheet">
 </head>
 <body>
-<h1>
-    Opret din ønskeliste her
-</h1>
+<div class="container-ting">
+    <span class="container-title">Lav din Ønskeseddel</span>
+    <form class="input-form" method="post">
+        <span class="container-title">Produkt navn</span>
+        <label for="product-name">
+            <input class="input" required id="product-name">
+        </label>
+        <span class="container-title">Produkt beskrivelse</span>
+        <label for="product-description">
+            <input class="input" required id="product-description">
+        </label>
+        <span class="container-title">Produkt pris</span>
+        <label for="product-price">
+            <input class="input" required type="number" min="0" id="product-price">
+        </label>
+        <span class="container-title">Produkt url</span>
+        <label for="product-url">
+            <input class="input" type="url" id="product-url">
+        </label>
+    </form>
+</div>
 </body>
 </html>
