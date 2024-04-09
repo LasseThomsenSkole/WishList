@@ -1,8 +1,6 @@
 package WishList.repository;
-
 import WishList.model.Wishlist;
 import WishList.model.User;
-
 import java.sql.*;
 
 public class WishlistJDBC {
