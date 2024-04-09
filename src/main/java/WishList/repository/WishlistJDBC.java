@@ -1,8 +1,9 @@
 package WishList.repository;
 
 import WishList.model.Wishlist;
+import WishList.model.User;
 
-import java.util.List;
+import java.sql.*;
 
 public class WishlistJDBC {
     private final String db_url = ""; //ik hardcode det her hvis vi kan det få det til at fungere uden
@@ -21,6 +22,23 @@ public class WishlistJDBC {
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
                 return new Wishlist(name, description);
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public User getUsernameFromID(int ID){
+        try(Connection con = DriverManager.getConnection(db_url, username, pw)){
+            String SQL = "SELECT name, password FROM Users WHERE id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+            preparedStatement.setInt(1, ID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                String name = resultSet.getString("name");
+                String password = resultSet.getString("password");
+                return new User(name, password);
             }
         }catch (SQLException e){
             throw new RuntimeException(e);
