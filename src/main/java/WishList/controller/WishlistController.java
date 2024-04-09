@@ -18,11 +18,7 @@ public class WishlistController {
 
     /** Login side **/
 
-    @GetMapping("/{userID}")
-    public String getWishlist(Model model, @PathVariable int userID){
-        model.addAttribute("wishlist", service.getWishlist(userID));
-        return "getWishlist";
-    }
+
 
     /** user Forside **/
     @GetMapping("{ID}/homepage")
@@ -35,11 +31,10 @@ public class WishlistController {
     }
 
     /** Wishlist page **/
-    @GetMapping("{ID}/your-wishlist")
-    public String wishlistPage (Model model) {
-
-        //Tilføje ønske, slet ønske
-        return  "wishlistPage";
+    @GetMapping("/{ID}")
+    public String getWishlist(Model model, @PathVariable int ID){
+        model.addAttribute("wishlist", service.getWishlist(ID));
+        return "getWishlist";
     }
 
     /** Slet ønskeliste **/
