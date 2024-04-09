@@ -1,25 +1,25 @@
 package WishList.model;
 //SKAL MÅSKE VÆRE ET ANDET STED IDK
-public class Product {
+public class Wish {
     private String name;
     private String description;
     private double price;
     private String url;
 
-    public Product(String name, String description, double price, String url){
+    public Wish(String name, String description, double price, String url){
         this.name = name;
         this.description = description;
         this.price = price;
         this.url = url;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getDescription() {
         return description;
