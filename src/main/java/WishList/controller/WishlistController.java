@@ -18,7 +18,7 @@ public class WishlistController {
 
     /** Login side **/
 
-    @GetMapping("/{ID}")
+    @GetMapping("/{userID}")
     public String getWishlist(Model model, @PathVariable int userID){
         model.addAttribute("wishlist", service.getWishlist(userID));
         return "getWishlist";
