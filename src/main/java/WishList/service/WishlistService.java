@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class WishlistService {
 
-    private WishlistJDBC repository;
+    private final WishlistJDBC repository;
+
+    public WishlistService(WishlistJDBC repository) {
+        this.repository = repository;
+    }
 
     public Wishlist getWishlist(int wishlistID) {
         return repository.getWishlist(wishlistID);
