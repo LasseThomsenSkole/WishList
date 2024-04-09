@@ -20,6 +20,10 @@ public class Wishlist {
         return name;
     }
 
+    public List<Wish> getWishes(){
+        return wishes;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

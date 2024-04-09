@@ -6,7 +6,19 @@
     <link href="/main.css" rel="stylesheet">
 </head>
 <body>
-<h1 th:text="${wishlist.getName()}"></h1>
+<div class="container-wishlist">
+    <h1 th:text="${wishlist.getName()}"></h1>
+    <h2 th:text="${wishlist.getDescription()}"></h2>
+    <div th:each="Wish : ${wishlist.getWishes}">
+        <h3 th:text="${Wish.getName()}"></h3>
+        <p th:text="${Wish.getDescription()}"></p>
+        <h4 th:text="${Wish.getPrice()}"></h4>
+        <!-- det her er fordi url'en godt kan være null -->
+        <th:block th:if="${Wish.getUrl() != null}">
+            <a th:href="@{${Wish.getUrl()}}">link til ønsket</a>
+        </th:block>
+    </div>
+</div>
 
 </body>
 </html>
