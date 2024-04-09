@@ -37,7 +37,7 @@ public class WishlistController {
     /** Wishlist page **/
     @GetMapping("{ID}/your-wishlist")
     public String wishlistPage (Model model) {
-        
+
         //Tilføje ønske, slet ønske
         return  "wishlistPage";
     }

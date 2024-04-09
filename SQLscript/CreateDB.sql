@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS Wish (
     id int auto_increment primary key,
     name varchar(50) NOT NULL,
     description varchar(255) NOT NULL DEFAULT ' ',
+    price int,
     url varchar(500), -- stackoverflow anbefalede denne længde
     wishlist_id int NOT NULL
 )

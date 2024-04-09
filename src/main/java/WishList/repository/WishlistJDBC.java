@@ -10,9 +10,9 @@ public class WishlistJDBC {
 
     //public List<Wishlist> getWishlists(){} //TODO til forside
 
-    public Wishlist getWishlist(int wishlistId){
+    public Wishlist getWishlist(int wishlistId){ 
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
-            String SQL = "SELECT name, description FROM Wishlists WHERE id = ?"; //TODO BRUG CONCAT
+            String SQL = "SELECT w.id AS wishlist_id w.name AS wishlist_name w.description AS wishlist_description, GROUP_CONCAT(CONCAT(wi.id, ':', wi.name, ':', wi.description, ':',IFNULL(wi.url, '')) SEPARATOR '|')AS wishes FROM Wishlists w LEFT JOIN Wish wi ON w.id = wi.wishlist_id WHERE w.id = <wishlist_id> GROUP BY w.id;";
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
             preparedStatement.setInt(1, wishlistId);
             ResultSet resultSet = preparedStatement.executeQuery();
