@@ -49,7 +49,7 @@ public class WishlistController {
     @GetMapping("/create") //unik url
     public String createWishList(Model model){
         //metode som opretter wishlist med et ID, (laver et url), og hvor man kan navngive den.
-        model.addAttribute("", );
+        //model.addAttribute("", );
         return "createWishList";
     }
 

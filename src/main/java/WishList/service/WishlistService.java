@@ -1,8 +1,11 @@
 package WishList.service;
 
+import WishList.model.User;
 import WishList.model.Wishlist;
 import WishList.repository.WishlistJDBC;
+import org.springframework.stereotype.Service;
 
+@Service
 public class WishlistService {
 
     private WishlistJDBC repository;
@@ -11,7 +14,7 @@ public class WishlistService {
         return repository.getWishlist(wishlistID);
     }
 
-    public Wishlist getUsernameFromID(int ID) {
+    public User getUsernameFromID(int ID) {
         return repository.getUsernameFromID(ID);
     }
 
