@@ -99,7 +99,7 @@ public class WishlistJDBC {
             preparedStatement.setDouble(3, updatedwish.getPrice());
             preparedStatement.setString(4, updatedwish.getUrl());
             preparedStatement.setInt(5, id);
-            int affectedRows = preparedStatement.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate(); //bruger ik til noget, smid exception
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
