@@ -3,6 +3,7 @@ import WishList.model.Wish;
 import WishList.model.Wishlist;
 import WishList.model.User;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -61,5 +62,77 @@ public class WishlistJDBC {
         }
         return null;
     }
+
+    public void createWishlist(String name, String description, int userId){
+        try(Connection con = DriverManager.getConnection(db_url, username, pw)){
+            String SQL = "INSERT INTO Wishlists (name, description, user_id) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, description);
+            preparedStatement.setInt(3, userId);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+    public void insertWish(String name, String description, double price, String url, int wishlistId){
+        try (Connection con = DriverManager.getConnection(db_url, username, pw)){
+            String SQL = "INSERT INTO Wish (name, description, price, url, wishlist_id) VALUES (?, ?, ?, ?, ?);";
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, description);
+            preparedStatement.setDouble(3, price);
+            preparedStatement.setString(4, url);
+            preparedStatement.setInt(5, wishlistId);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateWish(int id, Wish updatedwish) {
+        try(Connection con = DriverManager.getConnection(db_url, username, pw)) {
+            String SQL = "UPDATE Wish SET name = ?, description = ?, price = ?, url = ? WHERE id = ?;";
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+            preparedStatement.setString(1, updatedwish.getName());
+            preparedStatement.setString(2, updatedwish.getDescription());
+            preparedStatement.setDouble(3, updatedwish.getPrice());
+            preparedStatement.setString(4, updatedwish.getUrl());
+            preparedStatement.setInt(5, id);
+            int affectedRows = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void deleteWish (int ID) {
+            try(Connection con = DriverManager.getConnection(db_url, username, pw)){
+                String SQL = "DELETE FROM Wish WHERE id = ?";
+                PreparedStatement preparedStatement = con.prepareStatement(SQL);
+                preparedStatement.setInt(1, ID);
+                preparedStatement.executeUpdate();
+            }
+            catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+    }
+
+
+
+    public void shareWishlist () {
+        try(Connection con =DriverManager.getConnection(db_url,username,pw)){
+        String SQL ="";
+        //link til wishlist skal sendes - kopiere link? knapper?
+        // wishlist_id kan bruges som unikt id til at sende til modtager af listen
+        //
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 
 }

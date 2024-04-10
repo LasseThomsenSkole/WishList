@@ -3,9 +3,7 @@ package WishList.controller;
 import WishList.service.WishlistService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("wishlist") //localhost:8080/wishlist
@@ -23,7 +21,7 @@ public class WishlistController {
     /** user Forside **/
     @GetMapping("{ID}/homepage")
     public String homepage (Model model) {
-        //createWishList knap til oprettelse af wishlish
+        //createWishList knap til oprettelse af wishlist
         //Wishlists skal være herinde
         //Slet ønskeliste
 
@@ -46,6 +44,18 @@ public class WishlistController {
         //metode som opretter wishlist med et ID, (laver et url), og hvor man kan navngive den.
         //model.addAttribute("", );
         return "createWishList";
+    }
+
+    @PostMapping("/{ID}/update")
+    public String updateWish(Model model, @PathVariable int ID){
+        service.updateWish(ID, );
+        return "homepage";//ved ikke hvad den skal return
+    }
+
+    @DeleteMapping("/{ID}/delete-wish")
+    public String deleteWish(@RequestBody int ID){
+         service.deleteWish(ID);
+        return "homepage"; //ved ikke hvad det her skal være. mici
     }
 
 

@@ -1,6 +1,7 @@
 package WishList.service;
 
 import WishList.model.User;
+import WishList.model.Wish;
 import WishList.model.Wishlist;
 import WishList.repository.WishlistJDBC;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,12 @@ public class WishlistService {
         return repository.getUsernameFromID(ID);
     }
 
+    public void updateWish(int ID, Wish updatedWish) { //dunno todo: test det;
+        repository.updateWish(ID, updatedWish);
+    }
 
-
-
+    public void deleteWish(int ID) {
+        repository.deleteWish(ID);
+    }
 
 }
