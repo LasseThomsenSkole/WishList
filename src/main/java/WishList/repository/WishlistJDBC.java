@@ -8,11 +8,13 @@ import org.springframework.ui.Model;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 @Repository
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
-    private String username = "";
-    private String pw = "";
+    private String username = "root";
+    private String pw = "-mads18B";
 
     //public List<Wishlist> getWishlists(){} //TODO til forside
 
@@ -119,14 +121,23 @@ public class WishlistJDBC {
     }
 
 
+    //chatgpt sagde det her
+    public static String geneateUniqueID() {
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
 
-    public void shareWishlist () {
+    //ved ikke om det fungere
+    public void shareWishlist (String name, String description, int userId) {
         try(Connection con =DriverManager.getConnection(db_url,username,pw)){
-        String SQL ="";
-        //link til wishlist skal sendes - kopiere link? knapper?
-        // wishlist_id kan bruges som unikt id til at sende til modtager af listen
-        //
-
+            String uniqueWishlistURL = geneateUniqueID();
+            String SQL = "INSERT INTO Wishlists (id, name, description, user_id) VALUES (?, ?, ?, ?)";
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+            preparedStatement.setString(1, uniqueWishlistURL);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, description);
+            preparedStatement.setInt(4, userId);
+            preparedStatement.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }

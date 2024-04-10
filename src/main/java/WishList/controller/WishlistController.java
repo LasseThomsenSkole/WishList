@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("wishlist") //localhost:8080/wishlist
 public class WishlistController {
     private WishlistService service;
-
     public WishlistController(WishlistService service) {
         this.service = service;
     }
 
     /** Login side **/
-
-
+    @GetMapping("")
+    public String logIn (Model model){
+        return "login";
+    }
 
     /** user Forside **/
     @GetMapping("{ID}/homepage")
@@ -48,7 +49,7 @@ public class WishlistController {
 
     @PostMapping("/{ID}/update")
     public String updateWish(Model model, @PathVariable int ID){
-        service.updateWish(ID, );
+        //service.updateWish(ID, );
         return "homepage";//ved ikke hvad den skal return
     }
 
