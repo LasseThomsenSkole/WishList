@@ -14,4 +14,4 @@ public class WishListApplication {
 // Hvordan laver vi login og password
 // Skal programmet op på azure? og SQL?
 // Continous Integration hjælp?
-//
+// Login - letteste måde?
