@@ -20,7 +20,18 @@ public class WishlistJDBC {
 
     public Wishlist getWishlist(int wishlistId){
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
-            String SQL = "SELECT w.id AS wishlist_id, w.name AS wishlist_name, w.description AS wishlist_description, GROUP_CONCAT(CONCAT(wi.id, ':::', wi.name, ':::', wi.description, ':::', wi.url, ':::', wi.price, ':::') SEPARATOR ';;;') AS wishes FROM Wishlists w LEFT JOIN Wish wi ON w.id = wi.wishlist_id WHERE w.id = ? GROUP BY w.id;";
+            String SQL =
+                    "SELECT w.id AS wishlist_id " +
+                    "w.name AS wishlist_name, " +
+                            "w.description AS wishlist_description," +
+                            " GROUP_CONCAT(CONCAT(wi.id, ':::'," +
+                            " wi.name, ':::', wi.description, ':::'," +
+                            " wi.url, ':::', wi.price, ':::') SEPARATOR ';;;') AS wishes " +
+                            "FROM Wishlists w " +
+                            "LEFT JOIN Wish wi " +
+                            "ON w.id = wi.wishlist_id " +
+                            "WHERE w.id = ? " +
+                            "GROUP BY w.id;";
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
             preparedStatement.setInt(1, wishlistId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -31,7 +42,7 @@ public class WishlistJDBC {
                 String concatWishes = resultSet.getString("wishes");
                 String[] NonFormattedwishes = concatWishes.split(";;;"); //forvirrende men skal være sådan her
 
-                List<Wish> wishes = new ArrayList<>(); //MÅSKE SKA DET VÆRE EN METODE FOR SIG SELV
+                List<Wish> wishes = new ArrayList<>(); //MÅSKE SKA DET VÆRE EN METODE FOR SIG SELV - jo prøv at splitte den op
                 for (String notFormattedWish : NonFormattedwishes){
                     String[] splittedValues = notFormattedWish.split(":::"); //også helt væk men skal være sådan
                     String wishName = splittedValues[1];
@@ -96,6 +107,7 @@ public class WishlistJDBC {
             throw new RuntimeException(e);
         }
     }
+
     public void insertWish(String name, String description, double price, String url, int wishlistId){
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
             String SQL = "INSERT INTO Wish (name, description, price, url, wishlist_id) VALUES (?, ?, ?, ?, ?);";
@@ -136,6 +148,20 @@ public class WishlistJDBC {
             catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+    }
+
+    public void deleteWishlist (int ID) {
+        try(Connection con = DriverManager.getConnection(db_url, username, pw)){
+            String SQL =
+                    "DELETE FROM Wishlists " +
+                            "WHERE id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+            preparedStatement.setInt(1, ID);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

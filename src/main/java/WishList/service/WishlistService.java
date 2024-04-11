@@ -35,4 +35,9 @@ public class WishlistService {
         repository.deleteWish(ID);
     }
 
+    public void deleteWishlist(int ID) {
+        repository.deleteWishlist(ID);
+    }
+
+
 }

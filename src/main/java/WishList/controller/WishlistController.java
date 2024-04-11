@@ -31,7 +31,7 @@ public class WishlistController {
     }
 
     /** Wishlist page **/
-    @GetMapping("/{ID}")
+    @GetMapping("/{ID}") //viser en persons wishlist via ID
     public String getWishlist(Model model, @PathVariable int ID){
         model.addAttribute("wishlist", service.getWishlist(ID));
         return "getWishlist";
@@ -41,7 +41,7 @@ public class WishlistController {
 
     /** Opret ønskeliste - navn **/
 
-    @GetMapping("/create") //unik url
+    @GetMapping("/create") //unik url // Det her er vel create wish? ikke wishlist - andrea
     public String createWishList(Model model){
         //metode som opretter wishlist med et ID, (laver et url), og hvor man kan navngive den.
         //model.addAttribute("", );
@@ -62,7 +62,7 @@ public class WishlistController {
         }
     }
 
-    // Metode til at opdatere et ønske
+    /** Slet fra ønskeliste/redigering af ønskeliste **/
     @PostMapping("/{wishlistId}/wish/{wishId}/update")
     public String updateWish(@PathVariable int wishlistId, @PathVariable int wishId,
                              @ModelAttribute("wish") Wish wish, Model model) {
@@ -80,7 +80,6 @@ public class WishlistController {
 
     /** INDEN UNDER WISHLIST PAGE: **/
     /** Tilføj ønske - tilføje ønske, url, pris, navn**/
-    /** Slet fra ønskeliste/redigering af ønskeliste **/
     /** Reservere ønske (IKKE MUST) **/
     /** Dele ønskeliste (IKKE MUST) **/
 
