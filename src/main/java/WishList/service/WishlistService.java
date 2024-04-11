@@ -18,6 +18,9 @@ public class WishlistService {
     public Wishlist getWishlist(int wishlistID) {
         return repository.getWishlist(wishlistID);
     }
+    public void createWishlist(Wishlist wishlist, int userId){
+        repository.createWishlist(wishlist, userId);
+    }
 
     public User getUsernameFromID(int ID) {
         return repository.getUsernameFromID(ID);

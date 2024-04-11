@@ -11,6 +11,7 @@ public class Wishlist {
         this.description = description;
         this.wishes = wishes;
     }
+    public Wishlist(){}//den her skal være der for at /create virker
 
     public String getDescription() {
         return description;

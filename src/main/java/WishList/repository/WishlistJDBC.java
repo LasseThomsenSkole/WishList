@@ -142,14 +142,14 @@ public class WishlistJDBC {
         return null;
     }
 
-    public void createWishlist(String name, String description, int userId){
+    public void createWishlist(Wishlist wishlist, int userId){
         try(Connection con = DriverManager.getConnection(db_url, username, pw)){
             String SQL =
                     "INSERT INTO Wishlists (name, description, user_id) " +
                     "VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, description);
+            preparedStatement.setString(1, wishlist.getName());
+            preparedStatement.setString(2, wishlist.getDescription());
             preparedStatement.setInt(3, userId);
             preparedStatement.executeUpdate();
         }catch (SQLException e){

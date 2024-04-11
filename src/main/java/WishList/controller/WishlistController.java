@@ -1,6 +1,7 @@
 package WishList.controller;
 
 import WishList.model.Wish;
+import WishList.model.Wishlist;
 import WishList.service.WishlistService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ public class WishlistController {
 
     /** user Forside **/
     @GetMapping("{ID}/homepage")
-    public String homepage (Model model) {
+    public String homepage (Model model, @PathVariable int userID) {
         //createWishList knap til oprettelse af wishlist
         //Wishlists (i flertal) skal være herinde
         //Slet ønskeliste knap
@@ -43,8 +44,13 @@ public class WishlistController {
 
     @GetMapping("/create") //unik url // Det her er vel create wish? ikke wishlist - andrea
     public String createWishList(Model model){
-        //metode som opretter wishlist med et ID, (laver et url), og hvor man kan navngive den.
-        //model.addAttribute("", );
+        model.addAttribute("wishlist", new Wishlist());
+        return "createWishList";
+    }
+
+    @PostMapping("/{userID}/create") //TODO HVORDAN SKAL USERID VÆRE DER
+    public String postWishList(@ModelAttribute Wishlist wishlist, @PathVariable int userID){
+        service.createWishlist(wishlist, userID);
         return "createWishList";
     }
 
