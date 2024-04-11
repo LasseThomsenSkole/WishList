@@ -1,0 +1,56 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.button {
+    background-color: #8f56b3;
+    color: white;
+    padding: 20px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px; /* Let afrundede hjørner */
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    transition: all 0.3s ease; /* Glat transition for hover-effekten */
+}
+
+.button:hover {
+    background-color: #9f338c;
+    box-shadow: 0 12px 24px 0 rgba(0,0,0,0.25); /* Mere udtalt skyggeeffekt for hover */
+    transform: translateY(-2px); /* Let løft af knappen for at indikere interaktivitet */
+}
+
+.button:active {
+    background-color: rgba(174, 105, 194, 0.86);
+    box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2);
+    transform: translateY(1px);
+}
+
+.welcome-box {
+    text-align: center;
+    background-color: rgba(147, 180, 213, 0.75);
+    padding: 40px;
+    margin: 50px auto;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.welcome-box h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.welcome-box p {
+    color: #666;
+    font-size: 18px;
+    margin-bottom: 30px;
+}

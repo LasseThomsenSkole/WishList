@@ -2,14 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- gør siden mobil-venlig i layout -->
     <title>WishList</title>
-    <link rel="stylesheet" href="css/homepage.css" th:href="@{/css/homepage.css}">
+    <link rel="stylesheet" href="/homepage.css" th:href="@{/homepage.css}">
 </head>
 <body>
 
-<div>
-    <a href="#" th:href="@{/create}" class="button">Create Wishlist</a>
+<div class="welcome-box">
+    <h1>Velkommen!</h1>
+    <p>Vil du lave en ønskeliste?</p>
+    <a href="#" th:href="@{/create}" class="button">ØNSKEKNAPPEN</a>
 </div>
 
 </body>
