@@ -73,7 +73,7 @@ public class WishlistController {
     @DeleteMapping("/{ID}/delete-wish")
     public String deleteWish(@RequestBody int ID){
          service.deleteWish(ID);
-        return "homepage"; //ved ikke hvad det her skal være. mici
+        return "redirect:getWishlist";
     }
 
 
