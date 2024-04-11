@@ -48,6 +48,25 @@ public class WishlistJDBC {
         return null;
     }
 
+    public Wish getWishById(int wishId) { //relevant for update og edit af wish
+        try (Connection con = DriverManager.getConnection(db_url, username, pw)){
+            String SQL = "SELECT * FROM Wish WHERE id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+            preparedStatement.setInt(1, wishId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                double price = resultSet.getDouble("price");
+                String url = resultSet.getString("url");
+                return new Wish(name, description, price, url); // Antager at Wish har en passende konstruktør
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
     public User getUsernameFromID(int ID){
         try(Connection con = DriverManager.getConnection(db_url, username, pw)){
             String SQL = "SELECT name, password FROM Users WHERE id = ?";
@@ -101,7 +120,7 @@ public class WishlistJDBC {
             preparedStatement.setDouble(3, updatedwish.getPrice());
             preparedStatement.setString(4, updatedwish.getUrl());
             preparedStatement.setInt(5, id);
-            int affectedRows = preparedStatement.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate(); //bruger ik til noget, smid exception
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

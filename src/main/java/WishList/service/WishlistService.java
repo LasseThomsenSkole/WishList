@@ -23,7 +23,11 @@ public class WishlistService {
         return repository.getUsernameFromID(ID);
     }
 
-    public void updateWish(int ID, Wish updatedWish) { //dunno todo: test det;
+    public Wish getWishById(int id) {
+        return repository.getWishById(id);
+    }
+
+    public void updateWish(int ID, Wish updatedWish) {
         repository.updateWish(ID, updatedWish);
     }
 
