@@ -48,7 +48,6 @@ public class WishlistController {
         return "createWishList";
     }
 
-
     // Metode til at vise formular for redigering af et ønske
     @GetMapping("/{wishlistId}/wish/{wishId}/edit")
     public String showEditWishForm(@PathVariable int wishlistId, @PathVariable int wishId, Model model) {
