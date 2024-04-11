@@ -24,8 +24,8 @@ public class WishlistController {
     @GetMapping("{ID}/homepage")
     public String homepage (Model model) {
         //createWishList knap til oprettelse af wishlist
-        //Wishlists skal være herinde
-        //Slet ønskeliste
+        //Wishlists (i flertal) skal være herinde
+        //Slet ønskeliste knap
 
         return "homepage";
     }
@@ -62,20 +62,26 @@ public class WishlistController {
         }
     }
 
-    /** Slet fra ønskeliste/redigering af ønskeliste **/
+    /** Redigering af ønskeliste **/
     @PostMapping("/{wishlistId}/wish/{wishId}/update")
     public String updateWish(@PathVariable int wishlistId, @PathVariable int wishId,
                              @ModelAttribute("wish") Wish wish, Model model) {
         service.updateWish(wishId, wish);
         return "redirect:/wishlist/";
     }
-//TODO return hvad?
+    /** Slet fra ønskeliste **/
     @DeleteMapping("/{ID}/delete-wish")
     public String deleteWish(@RequestBody int ID){
          service.deleteWish(ID);
         return "redirect:getWishlist";
     }
 
+    /** Slet ønskeliste **/
+    @DeleteMapping("/{ID}/delete-wishlist")
+    public String deleteWishlist (@RequestBody int ID) {
+        service.deleteWishlist(ID);
+        return "redirect: homepage";
+    }
 
 
     /** INDEN UNDER WISHLIST PAGE: **/
