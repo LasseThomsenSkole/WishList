@@ -1,5 +1,6 @@
 package WishList.controller;
 
+import WishList.model.Wish;
 import WishList.service.WishlistService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,10 +47,25 @@ public class WishlistController {
         return "createWishList";
     }
 
-    @PostMapping("/{ID}/update")
-    public String updateWish(Model model, @PathVariable int ID){
-        service.updateWish(ID, );
-        return "homepage";//ved ikke hvad den skal return
+    // Metode til at vise formular for redigering af et ønske
+    @GetMapping("/{wishlistId}/wish/{wishId}/edit")
+    public String showEditWishForm(@PathVariable int wishlistId, @PathVariable int wishId, Model model) {
+        Wish wish = service.getWishById(wishId);
+        if (wish != null) {
+            model.addAttribute("wish", wish);
+            model.addAttribute("wishlistId", wishlistId);
+            return "editWish";
+        } else {
+            return "redirect:/wishlist/" + wishlistId;
+        }
+    }
+
+    // Metode til at opdatere et ønske
+    @PostMapping("/{wishlistId}/wish/{wishId}/update")
+    public String updateWish(@PathVariable int wishlistId, @PathVariable int wishId,
+                             @ModelAttribute("wish") Wish wish, Model model) {
+        service.updateWish(wishId, wish);
+        return "redirect:/wishlist/";
     }
 
     @DeleteMapping("/{ID}/delete-wish")
