@@ -18,7 +18,7 @@ public class WishlistJDBC {
 
     //public List<Wishlist> getWishlists(){} //TODO til forside
 
-    public Wishlist getWishlist(int wishlistId){
+    /*public Wishlist getWishlist(int wishlistId){
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
             String SQL =
                     "SELECT w.id AS wishlist_id " +
@@ -57,11 +57,55 @@ public class WishlistJDBC {
             throw new RuntimeException(e);
         }
         return null;
+    }*/
+
+    public Wishlist getWishlist(int wishlistId) {
+        Wishlist wishlist = null;
+        List<Wish> wishes = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(db_url, username, pw)) {
+            // Trin 1: Hent Wishesliste detaljer
+            String sqlWishlist = "SELECT id, name, description FROM Wishlists WHERE id = ?;";
+            try (PreparedStatement psWishlist = con.prepareStatement(sqlWishlist)) {
+                psWishlist.setInt(1, wishlistId);
+                ResultSet rsWishlist = psWishlist.executeQuery();
+                if (rsWishlist.next()) {
+                    String name = rsWishlist.getString("name");
+                    String description = rsWishlist.getString("description");
+                    wishlist = new Wishlist(name, description, wishes);
+                }
+            }
+
+            // Tjek at ønskelisten blev fundet før vi forsøger at hente ønsker
+            if (wishlist != null) {
+                // Trin 2: Hent Wishes for den givne Wishliste
+                String sqlWishes = "SELECT id, name, description, url, price FROM Wish WHERE wishlist_id = ?;";
+                try (PreparedStatement psWishes = con.prepareStatement(sqlWishes)) {
+                    psWishes.setInt(1, wishlistId);
+                    ResultSet rsWishes = psWishes.executeQuery();
+                    while (rsWishes.next()) {
+                        //int id = rsWishes.getInt("id");
+                        String name = rsWishes.getString("name");
+                        String description = rsWishes.getString("description");
+                        String url = rsWishes.getString("url");
+                        double price = rsWishes.getDouble("price");
+                        wishes.add(new Wish(name, description, price , url));
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return wishlist;
     }
 
     public Wish getWishById(int wishId) { //relevant for update og edit af wish
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
-            String SQL = "SELECT * FROM Wish WHERE id = ?";
+            String SQL =
+                    "SELECT * FROM Wish " +
+                    "WHERE id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
             preparedStatement.setInt(1, wishId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -80,7 +124,10 @@ public class WishlistJDBC {
 
     public User getUsernameFromID(int ID){
         try(Connection con = DriverManager.getConnection(db_url, username, pw)){
-            String SQL = "SELECT name, password FROM Users WHERE id = ?";
+            String SQL =
+                    "SELECT name, password " +
+                    "FROM Users " +
+                    "WHERE id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
             preparedStatement.setInt(1, ID);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -97,7 +144,9 @@ public class WishlistJDBC {
 
     public void createWishlist(String name, String description, int userId){
         try(Connection con = DriverManager.getConnection(db_url, username, pw)){
-            String SQL = "INSERT INTO Wishlists (name, description, user_id) VALUES (?, ?, ?)";
+            String SQL =
+                    "INSERT INTO Wishlists (name, description, user_id) " +
+                    "VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
@@ -110,7 +159,9 @@ public class WishlistJDBC {
 
     public void insertWish(String name, String description, double price, String url, int wishlistId){
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
-            String SQL = "INSERT INTO Wish (name, description, price, url, wishlist_id) VALUES (?, ?, ?, ?, ?);";
+            String SQL =
+                    "INSERT INTO Wish (name, description, price, url, wishlist_id) " +
+                    "VALUES (?, ?, ?, ?, ?);";
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
@@ -125,7 +176,10 @@ public class WishlistJDBC {
 
     public void updateWish(int id, Wish updatedwish) {
         try(Connection con = DriverManager.getConnection(db_url, username, pw)) {
-            String SQL = "UPDATE Wish SET name = ?, description = ?, price = ?, url = ? WHERE id = ?;";
+            String SQL =
+                    "UPDATE Wish " +
+                    "SET name = ?, description = ?, price = ?, url = ? " +
+                    "WHERE id = ?;";
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
             preparedStatement.setString(1, updatedwish.getName());
             preparedStatement.setString(2, updatedwish.getDescription());
@@ -135,12 +189,13 @@ public class WishlistJDBC {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void deleteWish (int ID) {
             try(Connection con = DriverManager.getConnection(db_url, username, pw)){
-                String SQL = "DELETE FROM Wish WHERE id = ?";
+                String SQL =
+                        "DELETE FROM Wish " +
+                        "WHERE id = ?";
                 PreparedStatement preparedStatement = con.prepareStatement(SQL);
                 preparedStatement.setInt(1, ID);
                 preparedStatement.executeUpdate();
@@ -164,29 +219,6 @@ public class WishlistJDBC {
         }
     }
 
-
-    //chatgpt sagde det her
-    public static String geneateUniqueID() {
-        UUID uuid = UUID.randomUUID();
-        return uuid.toString();
-    }
-
-    //ved ikke om det fungere
-    public String shareWishlist (String name, String description, int userId) {
-        try(Connection con =DriverManager.getConnection(db_url,username,pw)){
-            String uniqueWishlistURL = geneateUniqueID();
-            String SQL = "INSERT INTO Wishlists (id, name, description, user_id) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = con.prepareStatement(SQL);
-            preparedStatement.setString(1, uniqueWishlistURL);
-            preparedStatement.setString(2, name);
-            preparedStatement.setString(3, description);
-            preparedStatement.setInt(4, userId);
-            preparedStatement.executeUpdate();
-            return uniqueWishlistURL;
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 
 

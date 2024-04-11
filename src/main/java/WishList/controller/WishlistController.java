@@ -68,8 +68,8 @@ public class WishlistController {
                              @ModelAttribute("wish") Wish wish, Model model) {
         service.updateWish(wishId, wish);
         return "redirect:/wishlist/";
-      
-
+    }
+//TODO return hvad?
     @DeleteMapping("/{ID}/delete-wish")
     public String deleteWish(@RequestBody int ID){
          service.deleteWish(ID);
