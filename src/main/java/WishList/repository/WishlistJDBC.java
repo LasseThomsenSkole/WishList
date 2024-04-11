@@ -59,7 +59,7 @@ public class WishlistJDBC {
                 String description = resultSet.getString("description");
                 double price = resultSet.getDouble("price");
                 String url = resultSet.getString("url");
-                return new Wish(name, description, price, url); // Antager at Wish har en passende konstruktør
+                return new Wish(name, description, price, url);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -120,7 +120,6 @@ public class WishlistJDBC {
             preparedStatement.setDouble(3, updatedwish.getPrice());
             preparedStatement.setString(4, updatedwish.getUrl());
             preparedStatement.setInt(5, id);
-            int affectedRows = preparedStatement.executeUpdate(); //bruger ik til noget, smid exception
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
