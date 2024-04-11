@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>homepage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WishList</title>
+    <link rel="stylesheet" href="css/homepage.css" th:href="@{/css/homepage.css}">
 </head>
 <body>
+
+<div>
+    <a href="#" th:href="@{/create}" class="button">Create Wishlist</a>
+</div>
 
 </body>
 </html>
