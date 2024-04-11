@@ -147,7 +147,7 @@ public class WishlistJDBC {
     }
 
     //ved ikke om det fungere
-    public void shareWishlist (String name, String description, int userId) {
+    public String shareWishlist (String name, String description, int userId) {
         try(Connection con =DriverManager.getConnection(db_url,username,pw)){
             String uniqueWishlistURL = geneateUniqueID();
             String SQL = "INSERT INTO Wishlists (id, name, description, user_id) VALUES (?, ?, ?, ?)";
@@ -157,6 +157,7 @@ public class WishlistJDBC {
             preparedStatement.setString(3, description);
             preparedStatement.setInt(4, userId);
             preparedStatement.executeUpdate();
+            return uniqueWishlistURL;
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
