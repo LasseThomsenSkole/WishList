@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("wishlist") //localhost:8080/wishlist
 public class WishlistController {
     private WishlistService service;
-
     public WishlistController(WishlistService service) {
         this.service = service;
     }
 
     /** Login side **/
-
-
+    @GetMapping("")
+    public String logIn (Model model){
+        return "login";
+    }
 
     /** user Forside **/
     @GetMapping("{ID}/homepage")
@@ -47,6 +48,7 @@ public class WishlistController {
         return "createWishList";
     }
 
+
     // Metode til at vise formular for redigering af et ønske
     @GetMapping("/{wishlistId}/wish/{wishId}/edit")
     public String showEditWishForm(@PathVariable int wishlistId, @PathVariable int wishId, Model model) {
@@ -66,7 +68,7 @@ public class WishlistController {
                              @ModelAttribute("wish") Wish wish, Model model) {
         service.updateWish(wishId, wish);
         return "redirect:/wishlist/";
-    }
+      
 
     @DeleteMapping("/{ID}/delete-wish")
     public String deleteWish(@RequestBody int ID){

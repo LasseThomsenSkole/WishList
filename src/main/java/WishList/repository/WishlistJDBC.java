@@ -13,8 +13,8 @@ import java.util.UUID;
 @Repository
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
-    private String username = "";
-    private String pw = "";
+    private String username = "root";
+    private String pw = "-mads18B";
 
     //public List<Wishlist> getWishlists(){} //TODO til forside
 
