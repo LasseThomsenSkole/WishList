@@ -48,7 +48,7 @@ public class WishlistJDBC {
                     String wishName = splittedValues[1];
                     String wishDesc = splittedValues[2];
                     String wishUrl = splittedValues[3];
-                    int wishPrice = Integer.valueOf(splittedValues[4]);
+                    int wishPrice = Integer.parseInt(splittedValues[4]);
                     wishes.add(new Wish(wishName, wishDesc, wishPrice, wishUrl));
                 }
                 return new Wishlist(name, description, wishes);

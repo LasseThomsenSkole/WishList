@@ -32,13 +32,11 @@ public class WishlistController {
     }
 
     /** Wishlist page **/
-    @GetMapping("/{ID}") //viser en persons wishlist via ID
-    public String getWishlist(Model model, @PathVariable int ID){
-        model.addAttribute("wishlist", service.getWishlist(ID));
+    @GetMapping("/{wishlistID}") //viser en persons wishlist via ID
+    public String getWishlist(Model model, @PathVariable int wishlistID){
+        model.addAttribute("wishlist", service.getWishlist(wishlistID));
         return "getWishlist";
     }
-
-    /** Slet ønskeliste **/
 
     /** Opret ønskeliste - navn **/
 
@@ -75,16 +73,16 @@ public class WishlistController {
         return "redirect:/wishlist/";
     }
     /** Slet fra ønskeliste **/
-    @DeleteMapping("/{ID}/delete-wish")
-    public String deleteWish(@RequestBody int ID){
-         service.deleteWish(ID);
+    @DeleteMapping("/{wishID}/delete-wish")
+    public String deleteWish(@PathVariable int wishID){
+         service.deleteWish(wishID);
         return "redirect:getWishlist";
     }
 
     /** Slet ønskeliste **/
-    @DeleteMapping("/{ID}/delete-wishlist")
-    public String deleteWishlist (@RequestBody int ID) {
-        service.deleteWishlist(ID);
+    @DeleteMapping("/{wishlistID}/delete-wishlist") //HUSK at brug 'DELETE' som http request i html
+    public String deleteWishlist (@PathVariable int wishlistID) {
+        service.deleteWishlist(wishlistID);
         return "redirect: homepage";
     }
 
