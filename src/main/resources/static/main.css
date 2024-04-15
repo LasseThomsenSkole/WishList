@@ -1,3 +1,18 @@
+title {
+    text-align: center;
+}
+
+.container-login {
+    background-color: #8f56b3;
+    background-color: rgba(147, 180, 213, 0.75);
+    padding: 40px;
+    margin: 50px auto;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
 .rounded {
     border-radius: 0.25rem;
 }
@@ -21,4 +36,23 @@ body {
 }
 .input-form{
     border: thick black;
+}
+
+.create-text-input {
+    width: calc(100% - 130px); /* Adjust the width based on label width - gpt sagde det her og det virker aner ik hvad det gør*/
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+}
+
+.create-form {
+    max-width: 400px; /*hvor lang inputboxen ska være*/
+    margin: 0 auto; /*det gør så den er i midten af siden*/
+}
+
+.create-form-label {
+    width: 120px;
+    margin-right: 10px;
+}
+
+.form-group{
+    margin-bottom: 12px;
 }

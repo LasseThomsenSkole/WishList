@@ -22,8 +22,8 @@ public class WishlistController {
     }
 
     /** user Forside **/
-    @GetMapping("{ID}/homepage")
-    public String homepage (Model model, @PathVariable int userID) {
+    @GetMapping("{userID}/homepage")
+    public String homepage (Model model, @PathVariable int userID) { //TODO SET PARAMETERVARIABLE
         //createWishList knap til oprettelse af wishlist
         model.addAttribute("wishlists", service.getWishlistsFromUserID(userID));
         //todo Slet ønskeliste knap(endpoint -> delete-wishlist)
