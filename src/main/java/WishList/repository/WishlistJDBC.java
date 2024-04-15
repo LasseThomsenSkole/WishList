@@ -121,6 +121,7 @@ public class WishlistJDBC {
         }
         return null;
     }
+    //math.random ?
 
     public User getUsernameFromID(int ID){
         try(Connection con = DriverManager.getConnection(db_url, username, pw)){
@@ -141,6 +142,39 @@ public class WishlistJDBC {
         }
         return null;
     }
+
+    /** LOGIN - kig gerne på det**/
+    public User compareUserIdToPassword (int ID) {
+        try(Connection con = DriverManager.getConnection(db_url, username, pw)) {
+            String SQL =
+                    "SELECT password" +
+                    "FROM Users" +
+                    "WHERE id = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+            preparedStatement.setInt(1, ID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                String pw = resultSet.getString("password");
+                String providedPassword ="password123"; //det som person skriver ind som password
+
+                if (pw.equals(providedPassword)) {
+                    System.out.println("Logger ind");
+                } else {
+                    System.out.println("Forkert password");
+                }
+            } else {
+                System.out.println("username ikke fundet");
+
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+    //for login - compare userid to password
+
+
+
 
     public void createWishlist(Wishlist wishlist, int userId){
         try(Connection con = DriverManager.getConnection(db_url, username, pw)){
