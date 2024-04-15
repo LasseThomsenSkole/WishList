@@ -142,7 +142,7 @@ public class WishlistJDBC {
         return null;
     }
 
-    /** LOGIN - kig gerne på det**/
+    /** LOGIN - kig gerne på det**/ //for login - compare userid to password
     public User compareUserIdToPassword (int ID) {
         try(Connection con = DriverManager.getConnection(db_url, username, pw)) {
             String SQL =
@@ -170,8 +170,20 @@ public class WishlistJDBC {
         }
         return null;
     }
-    //for login - compare userid to password
 
+    public User createUser(User user) throws LoginSampleException {
+        try {
+            Connection con = DriverManager.getConnection(db_url,username,pw);
+            String SQL = "INSERT INTO Users (name, password) VALUES ( ?, ?)";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.executeUpdate();
+            return user;
+        } catch (SQLException ex) {
+            throw new LoginSampleException(ex.getMessage());
+        }
+    }
 
 
 
