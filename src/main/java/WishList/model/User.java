@@ -1,11 +1,25 @@
 package WishList.model;
+
+import java.util.List;
+
 public class User {
     private String username;
     private String password;
+    private List<User> users;
 
     public User(String username, String password){
         this.username = username;
         this.password = password;
+    }
+
+    public User(String username, String password, List<User> users) {
+        this.username = username;
+        this.password = password;
+        this.users = users;
+    }
+
+    public User() {
+        //Skal være her for createProfile
     }
 
     public String getPassword() {
@@ -22,6 +36,10 @@ public class User {
     
     public void setUsername(String username) {
             this.username = username;
+    }
+
+    public List<User> getUsers(){
+        return users;
     }
 
 }

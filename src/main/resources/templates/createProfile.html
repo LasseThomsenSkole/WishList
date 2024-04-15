@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="dk">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Profile</title>
+    <link href="/main.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        html {
+            display: table;
+            margin: auto;
+        }
+        body {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        div  {
+            text-align: center;
+            width: 400px;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-login">
+        <span class="container-title">Opret profil</span>
+
+
+    <form class="input-form" method="post" th:action="" th:object="${users}">
+        <br>
+        <label class="create-form-label" for="username">Brugernavn</label>
+        <br>
+        <input class="input" required id="username" th:field="*{name}">
+        <br>
+        <br>
+        <label class="create-form-label" for="password">Kodeord</label>
+        <br>
+        <input class="input" required id="password" th:field="*{password}">
+        <br>
+        <br>
+        <button type="submit">Opret</button>
+    </form>
+
+</div>
+</body>
+</html>

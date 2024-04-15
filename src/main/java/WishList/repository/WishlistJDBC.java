@@ -13,7 +13,7 @@ import java.util.List;
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
     private String username = "root";
-    private String pw = "";
+    private String pw = "Andrea1999!";
 
     //TODO til forside
     public List<Wishlist> getWishlistsByUserId(int userId) { //den virker
@@ -171,17 +171,18 @@ public class WishlistJDBC {
         return null;
     }
 
-    public User createUser(User user) throws LoginSampleException {
-        try {
-            Connection con = DriverManager.getConnection(db_url,username,pw);
-            String SQL = "INSERT INTO Users (name, password) VALUES ( ?, ?)";
+    public User createProfile(User user) {
+        try(Connection con = DriverManager.getConnection(db_url,username,pw)) {
+            String SQL =
+                    "INSERT INTO Users (name, password)" +
+                    " VALUES ( ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
             ps.executeUpdate();
             return user;
-        } catch (SQLException ex) {
-            throw new LoginSampleException(ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

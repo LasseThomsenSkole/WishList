@@ -50,4 +50,7 @@ public class WishlistService {
     public int getUserIDFromWishlistID(int wishlistID) {
         return repository.getUserIDFromWishlistID(wishlistID);
     }
+    public User createProfile(User user) {
+        return repository.createProfile(user);
+    }
 }

@@ -1,5 +1,6 @@
 package WishList.controller;
 
+import WishList.model.User;
 import WishList.model.Wish;
 import WishList.model.Wishlist;
 import WishList.service.WishlistService;
@@ -37,9 +38,9 @@ public class WishlistController {
         return "getWishlist";
     }
 
-    /** Opret ønskeliste - navn **/
+    /** Opret ønskeliste **/
 
-    @GetMapping("/create") //unik url // Det her er vel create wish? ikke wishlist - andrea
+    @GetMapping("/create") //unik url
     public String createWishList(Model model){
         model.addAttribute("wishlist", new Wishlist());
         return "createWishList";
@@ -86,13 +87,18 @@ public class WishlistController {
         return "redirect:/" + userID +"/homepage";
     }
 
+    @GetMapping("/createProfile")
+    public String createProfile(Model model){
+        model.addAttribute("users", new User());
+        return "createProfile";
+    }
 
-    /** INDEN UNDER WISHLIST PAGE: **/
-    /** Tilføj ønske - tilføje ønske, url, pris, navn**/
-    /** Reservere ønske (IKKE MUST) **/
-    /** Dele ønskeliste (IKKE MUST) **/
+    @PostMapping("/createProfile/create")
+    public String postProfile(@ModelAttribute User user){
 
-
+        service.createProfile(user);
+        return "redirect: homepage";
+    }
 
 
 }
