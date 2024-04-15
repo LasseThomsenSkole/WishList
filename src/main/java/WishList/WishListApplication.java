@@ -11,6 +11,5 @@ public class WishListApplication {
     }
 }
 /** SPØRGSMÅL **/
-// Hvordan laver vi login og password
 // Skal programmet op på azure? og SQL?
 // Continous Integration hjælp?

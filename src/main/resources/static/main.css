@@ -1,6 +1,9 @@
 title {
     text-align: center;
 }
+body {
+    background-color: lightslategray;
+}
 
 .container-login {
     background-color: #8f56b3;
@@ -15,9 +18,6 @@ title {
 
 .rounded {
     border-radius: 0.25rem;
-}
-body {
-    background-color: lightslategray;
 }
 .container-ting {
     position: relative;
