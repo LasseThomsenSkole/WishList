@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("wishlist") //localhost:8080/wishlist
+@Controller //localhost:8081
+@RequestMapping("")
 public class WishlistController {
     private WishlistService service;
     public WishlistController(WishlistService service) {
@@ -25,14 +25,13 @@ public class WishlistController {
     @GetMapping("{ID}/homepage")
     public String homepage (Model model, @PathVariable int userID) {
         //createWishList knap til oprettelse af wishlist
-        //Wishlists (i flertal) skal være herinde
-        //Slet ønskeliste knap
-
+        model.addAttribute("wishlists", service.getWishlistsFromUserID(userID));
+        //todo Slet ønskeliste knap(endpoint -> delete-wishlist)
         return "homepage";
     }
 
     /** Wishlist page **/
-    @GetMapping("/{wishlistID}") //viser en persons wishlist via ID
+    @GetMapping("/{wishlistID}") //viser en wishlist via wishlistID
     public String getWishlist(Model model, @PathVariable int wishlistID){
         model.addAttribute("wishlist", service.getWishlist(wishlistID));
         return "getWishlist";
@@ -49,7 +48,7 @@ public class WishlistController {
     @PostMapping("/{userID}/create") //TODO HVORDAN SKAL USERID VÆRE DER
     public String postWishList(@ModelAttribute Wishlist wishlist, @PathVariable int userID){
         service.createWishlist(wishlist, userID);
-        return "createWishList";
+        return "redirect:homepage";
     }
 
     // Metode til at vise formular for redigering af et ønske
@@ -80,10 +79,11 @@ public class WishlistController {
     }
 
     /** Slet ønskeliste **/
-    @DeleteMapping("/{wishlistID}/delete-wishlist") //HUSK at brug 'DELETE' som http request i html
+    @PostMapping("/{wishlistID}/delete-wishlist") //det skal være postmapping med mindre vi ville bruge JavaScript
     public String deleteWishlist (@PathVariable int wishlistID) {
+        int userID = service.getUserIDFromWishlistID(wishlistID);
         service.deleteWishlist(wishlistID);
-        return "redirect: homepage";
+        return "redirect:/" + userID +"/homepage";
     }
 
 

@@ -2,62 +2,62 @@ package WishList.repository;
 import WishList.model.Wish;
 import WishList.model.Wishlist;
 import WishList.model.User;
+import WishList.service.LoginSampleException;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
     private String username = "root";
-    private String pw = "-mads18B";
+    private String pw = "Samsoe53";
 
-    //public List<Wishlist> getWishlists(){} //TODO til forside
+    //TODO til forside
+    public List<Wishlist> getWishlistsByUserId(int userId) { //den virker
+        List<Wishlist> wishlists = new ArrayList<>();
 
-    /*public Wishlist getWishlist(int wishlistId){
-        try (Connection con = DriverManager.getConnection(db_url, username, pw)){
-            String SQL =
-                    "SELECT w.id AS wishlist_id " +
-                    "w.name AS wishlist_name, " +
-                            "w.description AS wishlist_description," +
-                            " GROUP_CONCAT(CONCAT(wi.id, ':::'," +
-                            " wi.name, ':::', wi.description, ':::'," +
-                            " wi.url, ':::', wi.price, ':::') SEPARATOR ';;;') AS wishes " +
-                            "FROM Wishlists w " +
-                            "LEFT JOIN Wish wi " +
-                            "ON w.id = wi.wishlist_id " +
-                            "WHERE w.id = ? " +
-                            "GROUP BY w.id;";
-            PreparedStatement preparedStatement = con.prepareStatement(SQL);
-            preparedStatement.setInt(1, wishlistId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection con = DriverManager.getConnection(db_url, username, pw)) {
+            String sqlWishlists = "SELECT w.id AS wishlist_id, w.name AS wishlist_name, w.description AS wishlist_description " +
+                    "FROM Wishlists w " +
+                    "JOIN Users u ON w.user_id = u.id " +
+                    "WHERE u.id = ?;";
+            try (PreparedStatement psWishlists = con.prepareStatement(sqlWishlists)) {
+                psWishlists.setInt(1, userId);
+                ResultSet rsWishlists = psWishlists.executeQuery();
+                while (rsWishlists.next()) {
+                    int wishlistId = rsWishlists.getInt("wishlist_id");
+                    String name = rsWishlists.getString("wishlist_name");
+                    String description = rsWishlists.getString("wishlist_description");
 
-            if(resultSet.next()){
-                String name = resultSet.getString("wishlist_name");
-                String description = resultSet.getString("wishlist_description");
-                String concatWishes = resultSet.getString("wishes");
-                String[] NonFormattedwishes = concatWishes.split(";;;"); //forvirrende men skal være sådan her
+                    List<Wish> wishes = new ArrayList<>();
+                    String sqlWishes = "SELECT id, name, description, url, price " +
+                            "FROM Wish " +
+                            "WHERE wishlist_id = ?;";
+                    try (PreparedStatement psWishes = con.prepareStatement(sqlWishes)) {
+                        psWishes.setInt(1, wishlistId);
+                        ResultSet rsWishes = psWishes.executeQuery();
+                        while (rsWishes.next()) {
+                            String wishName = rsWishes.getString("name");
+                            String wishDescription = rsWishes.getString("description");
+                            String url = rsWishes.getString("url");
+                            double price = rsWishes.getDouble("price");
+                            wishes.add(new Wish(wishName, wishDescription, price , url));
+                        }
+                    }
 
-                List<Wish> wishes = new ArrayList<>(); //MÅSKE SKA DET VÆRE EN METODE FOR SIG SELV - jo prøv at splitte den op
-                for (String notFormattedWish : NonFormattedwishes){
-                    String[] splittedValues = notFormattedWish.split(":::"); //også helt væk men skal være sådan
-                    String wishName = splittedValues[1];
-                    String wishDesc = splittedValues[2];
-                    String wishUrl = splittedValues[3];
-                    int wishPrice = Integer.parseInt(splittedValues[4]);
-                    wishes.add(new Wish(wishName, wishDesc, wishPrice, wishUrl));
+                    // Add Wishlist to the List
+                    wishlists.add(new Wishlist(wishlistId,name, description, wishes));
                 }
-                return new Wishlist(name, description, wishes);
             }
-        }catch (SQLException e){
+
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
-    }*/
+        return wishlists;
+    }
 
     public Wishlist getWishlist(int wishlistId) {
         Wishlist wishlist = null;
@@ -70,9 +70,10 @@ public class WishlistJDBC {
                 psWishlist.setInt(1, wishlistId);
                 ResultSet rsWishlist = psWishlist.executeQuery();
                 if (rsWishlist.next()) {
+                    int id = rsWishlist.getInt("id");
                     String name = rsWishlist.getString("name");
                     String description = rsWishlist.getString("description");
-                    wishlist = new Wishlist(name, description, wishes);
+                    wishlist = new Wishlist(id, name, description, wishes);
                 }
             }
 
@@ -84,12 +85,12 @@ public class WishlistJDBC {
                     psWishes.setInt(1, wishlistId);
                     ResultSet rsWishes = psWishes.executeQuery();
                     while (rsWishes.next()) {
-                        //int id = rsWishes.getInt("id");
+                        int id = rsWishes.getInt("id");
                         String name = rsWishes.getString("name");
                         String description = rsWishes.getString("description");
                         String url = rsWishes.getString("url");
                         double price = rsWishes.getDouble("price");
-                        wishes.add(new Wish(name, description, price , url));
+                        wishes.add(new Wish(id, name, description, price , url));
                     }
                 }
             }
@@ -97,7 +98,6 @@ public class WishlistJDBC {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return wishlist;
     }
 
@@ -121,16 +121,15 @@ public class WishlistJDBC {
         }
         return null;
     }
-    //math.random ?
 
-    public User getUsernameFromID(int ID){
+    public User getUsernameFromID(int userID){
         try(Connection con = DriverManager.getConnection(db_url, username, pw)){
             String SQL =
                     "SELECT name, password " +
                     "FROM Users " +
                     "WHERE id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
-            preparedStatement.setInt(1, ID);
+            preparedStatement.setInt(1, userID);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 String name = resultSet.getString("name");
@@ -155,15 +154,15 @@ public class WishlistJDBC {
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 String pw = resultSet.getString("password");
-                String providedPassword ="password123"; //det som person skriver ind som password
+                String providedPassword ="password123"; //det som person skriver ind som password TODO burde være en parameter
 
                 if (pw.equals(providedPassword)) {
-                    System.out.println("Logger ind");
+                    System.out.println("Logger ind"); //skal outputte noget på html siden
                 } else {
-                    System.out.println("Forkert password");
+                    System.out.println("Forkert password"); //skal outputte noget på html siden
                 }
             } else {
-                System.out.println("username ikke fundet");
+                System.out.println("username ikke fundet"); //skal outputte noget på html siden
 
             }
         }catch (SQLException e){
@@ -208,7 +207,7 @@ public class WishlistJDBC {
         }
     }
 
-    public void updateWish(int id, Wish updatedwish) {
+    public void updateWish(int wishID, Wish updatedwish) {
         try(Connection con = DriverManager.getConnection(db_url, username, pw)) {
             String SQL =
                     "UPDATE Wish " +
@@ -219,19 +218,19 @@ public class WishlistJDBC {
             preparedStatement.setString(2, updatedwish.getDescription());
             preparedStatement.setDouble(3, updatedwish.getPrice());
             preparedStatement.setString(4, updatedwish.getUrl());
-            preparedStatement.setInt(5, id);
+            preparedStatement.setInt(5, wishID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void deleteWish (int ID) {
+    public void deleteWish (int wishID) {
             try(Connection con = DriverManager.getConnection(db_url, username, pw)){
                 String SQL =
                         "DELETE FROM Wish " +
                         "WHERE id = ?";
                 PreparedStatement preparedStatement = con.prepareStatement(SQL);
-                preparedStatement.setInt(1, ID);
+                preparedStatement.setInt(1, wishID);
                 preparedStatement.executeUpdate();
             }
             catch (SQLException e) {
@@ -239,18 +238,35 @@ public class WishlistJDBC {
             }
     }
 
-    public void deleteWishlist (int ID) {
+    public void deleteWishlist (int wishlistID) {
         try(Connection con = DriverManager.getConnection(db_url, username, pw)){
             String SQL =
                     "DELETE FROM Wishlists " +
                             "WHERE id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
-            preparedStatement.setInt(1, ID);
+            preparedStatement.setInt(1, wishlistID);
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    public int getUserIDFromWishlistID(int wishlistID){
+        try(Connection con = DriverManager.getConnection(db_url, username, pw)) {
+            String SQL = "SELECT w.id AS wishlist_id, u.id AS user_id " +
+                    "FROM Wishlists w " +
+                    "JOIN Users u ON w.user_id = u.id " +
+                    "WHERE w.id = ?;";
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+            preparedStatement.setInt(1, wishlistID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("user_id");
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 
 
