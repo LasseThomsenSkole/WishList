@@ -64,7 +64,7 @@ public class WishlistController {
         service.createWishlist(wishlist, userID);
         return "redirect:homepage"; //TODO: rettelse: return "redirect:/" + userID + "/homepage";
     }
-    @GetMapping("/{wishlistID}/createWish}") //jeg tror ikke den behøver userid
+    @GetMapping("/{wishlistID}/createWish") //jeg tror ikke den behøver userid
     public String createWish(Model model, @PathVariable int wishlistID){
         model.addAttribute("wish", new Wish());
         model.addAttribute("wishlistId", wishlistID);
