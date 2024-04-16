@@ -20,6 +20,7 @@ public class WishlistService {
     public Wishlist getWishlist(int wishlistID) {
         return repository.getWishlist(wishlistID);
     }
+
     public void createWishlist(Wishlist wishlist, int userId){
         repository.createWishlist(wishlist, userId);
     }
@@ -42,6 +43,10 @@ public class WishlistService {
 
     public Wish getWishById(int id) {
         return repository.getWishById(id);
+    }
+
+    public void insertWish(Wish wish, int wishlistID){
+        repository.insertWish(wish, wishlistID);
     }
 
     public void updateWish(int ID, Wish updatedWish) {

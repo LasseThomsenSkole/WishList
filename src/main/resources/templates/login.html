@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="da">
+<html xmlns:th="http://www.thymeleaf.org" lang="dk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wishlist</title>
+  
     <link href="/homepage.css" rel="stylesheet">
 </head>
 <body class="container-login">
@@ -11,18 +11,18 @@
     <div class="form-group">
         <label class="create-form-label" for="username">Brugernavn</label>
         <br>
-        <input class="create-text-input" type="text" id="username" th:field="*{username}" required autocomplete="username">
+        <input class="create-text-input" type="text" id="username" th:field="*{username}" required>
         <br><br>
     </div>
     <div class="form-group">
         <label class="create-form-label" for="password">Kodeord</label>
         <br>
-        <input class="create-text-input" type="password" id="password" th:field="*{password}" required autocomplete="current-password">
+        <input class="create-text-input" type="password" id="password" th:field="*{password}" required>
         <br><br>
     </div>
     <button type="submit" class="button">Login</button>
 </form>
 <br><br>
-<a href="/createProfile" class="button" role="button">Opret profil</a>
+<a href="/createProfile" class="button">Opret profil</a>
 </body>
 </html>

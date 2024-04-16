@@ -42,7 +42,11 @@
         <input class="input" required id="password" th:field="*{password}">
         <br>
         <br>
-        <button type="submit">Opret</button>
+        <form method="POST" th:action="@{'/create'}">
+            <button type="submit">Opret</button>
+        </form>
+
+
     </form>
 
 </div>
