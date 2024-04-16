@@ -28,6 +28,14 @@ public class WishlistService {
         return repository.getUsernameFromID(ID);
     }
 
+    public boolean authenticateUser(String username, String password) {
+        return repository.authenticateUser(username, password);
+    }
+
+    public void createUser(User user) {
+        repository.save(user);
+    }
+
     public Wish getWishById(int id) {
         return repository.getWishById(id);
     }
