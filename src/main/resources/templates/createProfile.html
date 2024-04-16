@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Profile</title>
-    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/static/main.css">
     <style>
         html, body {
             height: 100%;
@@ -30,7 +30,7 @@
         <span class="container-title">Opret profil</span>
 
 
-    <form class="input-form" method="post" th:action="" th:object="${users}">
+    <form class="input-form" method="post" th:action="@{/createProfile}" th:object="${users}">
         <br>
         <label class="create-form-label" for="username">Brugernavn</label>
         <br>
