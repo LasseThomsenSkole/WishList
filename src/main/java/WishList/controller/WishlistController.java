@@ -35,6 +35,21 @@ public class WishlistController {
         }
     }
 
+    /**Create Profile**/
+
+    @GetMapping("/createProfile")
+    public String createProfile(Model model){
+        model.addAttribute("user", new User());
+        return "createProfile";
+    }
+
+    @PostMapping("/createProfile")
+    public String postProfile(@ModelAttribute User user){
+        service.createProfile(user);
+        return "redirect:/homepage";
+
+    }
+
     /** user Forside **/
     @GetMapping("{userID}/homepage")
     public String homepage (Model model, @PathVariable int userID) { //TODO SET PARAMETERVARIABLE
@@ -105,18 +120,6 @@ public class WishlistController {
         return "redirect:/" + userID +"/homepage";
     }
 
-    @GetMapping("/createProfile")
-    public String createProfile(Model model){
-        model.addAttribute("user", new User());
-        return "createProfile";
-    }
-
-    @PostMapping("/createProfile")
-    public String postProfile(@ModelAttribute User user){
-        service.createProfile(user);
-        return "redirect:/homepage"
-     
-    }
 
 
 }
