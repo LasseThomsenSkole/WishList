@@ -12,5 +12,14 @@
     <a href="#" th:href="@{/create}" class="button">Create Wishlist</a>
 </div>
 
+=======
+<!-- det her ser helt fucked ud men vi finde ud af hvordan det skal styles - Lasse-->
+<div class="wishlist-container" th:each="wishlist : ${wishlists}">
+    <h1 th:text="${wishlist.getName()}"></h1>
+    <h2 th:text="${wishlist.getDescription()}"></h2>
+    <form method="POST" th:action="@{'/' + ${wishlist.getId()} + '/delete-wishlist'}">
+        <button type="submit">Delete Wishlist</button>
+    </form>
+</div>
 </body>
 </html>
