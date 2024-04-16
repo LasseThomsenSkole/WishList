@@ -231,16 +231,16 @@ public class WishlistJDBC {
         }
     }
 
-    public void insertWish(String name, String description, double price, String url, int wishlistId){
+    public void insertWish(Wish wish,int wishlistId){
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
             String SQL =
                     "INSERT INTO Wish (name, description, price, url, wishlist_id) " +
                     "VALUES (?, ?, ?, ?, ?);";
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, description);
-            preparedStatement.setDouble(3, price);
-            preparedStatement.setString(4, url);
+            preparedStatement.setString(1, wish.getName());
+            preparedStatement.setString(2, wish.getDescription());
+            preparedStatement.setDouble(3, wish.getPrice());
+            preparedStatement.setString(4, wish.getUrl());
             preparedStatement.setInt(5, wishlistId);
             preparedStatement.executeUpdate();
         }catch (SQLException e){

@@ -86,6 +86,11 @@ public class WishlistController {
         model.addAttribute("wishlistId", wishlistID);
         return "createWish";
     }
+    @PostMapping("/{wishlistID}/createWish")
+    public String createWish(@ModelAttribute Wish wish, @PathVariable int wishlistID){
+        service.insertWish(wish, wishlistID);
+        return "redirect:" + wishlistID;
+    }
     // Metode til at vise formular for redigering af et ønske
     @GetMapping("/{wishlistId}/wish/{wishId}/edit")
     public String showEditWishForm(@PathVariable int wishlistId, @PathVariable int wishId, Model model) {

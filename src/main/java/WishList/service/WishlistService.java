@@ -41,6 +41,10 @@ public class WishlistService {
         return repository.getWishById(id);
     }
 
+    public void insertWish(Wish wish, int wishlistID){
+        repository.insertWish(wish, wishlistID);
+    }
+
     public void updateWish(int ID, Wish updatedWish) {
         repository.updateWish(ID, updatedWish);
     }
