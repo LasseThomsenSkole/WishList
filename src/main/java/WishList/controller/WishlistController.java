@@ -4,6 +4,7 @@ import WishList.model.User;
 import WishList.model.Wish;
 import WishList.model.Wishlist;
 import WishList.service.WishlistService;
+import org.h2.engine.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,8 @@ public class WishlistController {
 
     /** Login side **/
     @GetMapping("")
-    public String logIn (Model model){
+    public String logIn (Model model, User user){
+        model.addAttribute("user", user);
         return "login";
     }
 
@@ -27,7 +29,7 @@ public class WishlistController {
     public String homepage (Model model, @PathVariable int userID) { //TODO SET PARAMETERVARIABLE
         //createWishList knap til oprettelse af wishlist
         model.addAttribute("wishlists", service.getWishlistsFromUserID(userID));
-        //todo Slet ønskeliste knap(endpoint -> delete-wishlist)
+        //knap til at se wishlisten
         return "homepage";
     }
 
@@ -51,7 +53,12 @@ public class WishlistController {
         service.createWishlist(wishlist, userID);
         return "redirect:homepage";
     }
-
+    @GetMapping("/{wishlistID/createWish}") //jeg tror ikke den behøver userid
+    public String createWish(Model model, @PathVariable int wishlistID){
+        model.addAttribute("wish", new Wish());
+        model.addAttribute("wishlistId", wishlistID);
+        return "createWish";
+    }
     // Metode til at vise formular for redigering af et ønske
     @GetMapping("/{wishlistId}/wish/{wishId}/edit")
     public String showEditWishForm(@PathVariable int wishlistId, @PathVariable int wishId, Model model) {
@@ -93,11 +100,10 @@ public class WishlistController {
         return "createProfile";
     }
 
-    @PostMapping("/createProfile/create")
+    @PostMapping("/createProfile")
     public String postProfile(@ModelAttribute User user){
-
         service.createProfile(user);
-        return "redirect: homepage";
+        return "redirect:homepage";
     }
 
 

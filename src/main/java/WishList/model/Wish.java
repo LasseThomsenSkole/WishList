@@ -20,6 +20,7 @@ public class Wish {
         this.price = price;
         this.url = url;
     }
+    public Wish(){}
 
     public int getId(){
         return id;
