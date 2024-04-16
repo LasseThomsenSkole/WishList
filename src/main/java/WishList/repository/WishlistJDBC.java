@@ -171,6 +171,35 @@ public class WishlistJDBC {
         return null;
     }
 
+    public boolean authenticateUser(String username, String providedPassword) {
+        String sql = "SELECT password FROM Users WHERE username = ?";
+        try (Connection con = DriverManager.getConnection(db_url, this.username, this.pw);
+             PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String storedPassword = resultSet.getString("password");
+                return providedPassword.equals(storedPassword); // Sammenligner plaintext kodeord
+            }
+            return false; // Brugernavn ikke fundet eller kodeord matcher ikke
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Opretter en ny bruger i databasen
+    public void save(User user) {
+        String sql = "INSERT INTO Users (username, password) VALUES (?, ?)";
+        try (Connection conn = DriverManager.getConnection(db_url, username, pw);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to save user to database", e);
+        }
+    }
+
     public User createProfile(User user) {
         try(Connection con = DriverManager.getConnection(db_url,username,pw)) {
             String SQL =
