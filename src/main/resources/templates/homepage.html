@@ -1,36 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="dk">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- gør siden mobil-venlig i layout -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WishList</title>
-    <link rel="stylesheet" href="static/homepage.css"> <!-- den kan ikke finde css for mig - Lasse -->
+    <link rel="stylesheet" href="/homepage.css" th:href="@{/homepage.css}">
 </head>
 <body>
 
-<div class="welcome-box">
-    <h1>Velkommen!</h1>
-    <p>Vil du lave en ønskeliste?</p>
-    <a href="#" th:href="@{/create}" class="button">ØNSKEKNAPPEN</a>
+<div>
+    <a href="#" th:href="@{/create}" class="button">Create Wishlist</a>
 </div>
-<!-- det her ser helt fucked ud men vi finde ud af hvordan det skal styles - Lasse-->
-<div class="wishlist-container" th:each="wishlist : ${wishlists}">
-    <h1 th:text="${wishlist.getName()}"></h1>
-    <h2 th:text="${wishlist.getDescription()}"></h2>
-    <div th:each="Wish : ${wishlist.getWishes}">
-        <h3 th:text="${Wish.getName()}"></h3>
-        <p th:text="${Wish.getDescription()}"></p>
-        <h4 th:text="${Wish.getPrice()}"></h4>
 
-    <!-- det her er fordi url'en godt kan være null -->
-        <th:block th:if="${Wish.getUrl() != null}">
-            <a th:href="@{${Wish.getUrl()}}">link til ønsket</a>
-        </th:block>
-    </div>
-    <form method="POST" th:action="@{'/' + ${wishlist.getId()} + '/delete-wishlist'}">
-        <button type="submit">Delete Wishlist</button>
-    </form>
-
-</div>
 </body>
 </html>

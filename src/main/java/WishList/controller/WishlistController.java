@@ -18,8 +18,20 @@ public class WishlistController {
 
     /** Login side **/
     @GetMapping("")
-    public String logIn (Model model){
+    public String loginForm(Model model){
+        model.addAttribute("user", new User());
         return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute User user, Model model) {
+        boolean isAuthenticated = service.authenticateUser(user.getUsername(), user.getPassword());
+        if (isAuthenticated) {
+            return "redirect:/homepage"; // Redirect to user homepage
+        } else {
+            model.addAttribute("error", "Invalid username or password");
+            return "login"; // Stay on login page
+        }
     }
 
     /** user Forside **/
@@ -35,7 +47,7 @@ public class WishlistController {
     @GetMapping("/{wishlistID}") //viser en wishlist via wishlistID
     public String getWishlist(Model model, @PathVariable int wishlistID){
         model.addAttribute("wishlist", service.getWishlist(wishlistID));
-        return "getWishlist";
+        return "getWishlist"; //skal den ik returnere en html?
     }
 
     /** Opret ønskeliste **/
@@ -49,7 +61,7 @@ public class WishlistController {
     @PostMapping("/{userID}/create") //TODO HVORDAN SKAL USERID VÆRE DER
     public String postWishList(@ModelAttribute Wishlist wishlist, @PathVariable int userID){
         service.createWishlist(wishlist, userID);
-        return "redirect:homepage";
+        return "redirect:homepage"; //TODO: rettelse: return "redirect:/" + userID + "/homepage";
     }
 
     // Metode til at vise formular for redigering af et ønske
@@ -76,7 +88,7 @@ public class WishlistController {
     @DeleteMapping("/{wishID}/delete-wish")
     public String deleteWish(@PathVariable int wishID){
          service.deleteWish(wishID);
-        return "redirect:getWishlist";
+        return "redirect:getWishlist"; // todo: skal det være return "redirect:/wishlist/" + wishlistId; ??
     }
 
     /** Slet ønskeliste **/
@@ -89,15 +101,14 @@ public class WishlistController {
 
     @GetMapping("/createProfile")
     public String createProfile(Model model){
-        model.addAttribute("users", new User());
+        model.addAttribute("user", new User());
         return "createProfile";
     }
 
     @PostMapping("/createProfile/create")
     public String postProfile(@ModelAttribute User user){
-
         service.createProfile(user);
-        return "redirect: homepage";
+        return "redirect:/homepage";
     }
 
 

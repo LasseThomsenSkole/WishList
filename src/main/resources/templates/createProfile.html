@@ -30,7 +30,7 @@
         <span class="container-title">Opret profil</span>
 
 
-    <form class="input-form" method="post" th:action="" th:object="${users}">
+    <form class="input-form" method="post" th:action="@{/createProfile/create}" th:object="${user}">
         <br>
         <label class="create-form-label" for="username">Brugernavn</label>
         <br>
