@@ -37,7 +37,7 @@ public class WishlistJDBCIT {
 
         repository.createWishlist(wishlist, userId);
 
-        Wishlist savedWishlist = repository.getWishlist(wishlist.getId());
+        Wishlist savedWishlist = repository.getWishlist(wishlist.getId()); // det er = null
         assertThat(savedWishlist)
                 .isNotNull()
                 .extracting(Wishlist::getName, Wishlist::getDescription, Wishlist::getId)

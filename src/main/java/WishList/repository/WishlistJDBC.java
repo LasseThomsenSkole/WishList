@@ -13,7 +13,7 @@ import java.util.List;
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
     private String username = "root";
-    private String pw = "-mads18B";
+    private String pw = "root";
 
     //TODO til forside
     public List<Wishlist> getWishlistsByUserId(int userId) { //den virker
