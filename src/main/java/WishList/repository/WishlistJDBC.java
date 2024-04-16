@@ -171,6 +171,21 @@ public class WishlistJDBC {
         return null;
     }
 
+    public Integer authenticateUserAndGetId(String username, String providedPassword) {
+        String sql = "SELECT id, password FROM Users WHERE name = ?";
+        try (Connection con = DriverManager.getConnection(db_url, this.username, this.pw);
+             PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next() && providedPassword.equals(resultSet.getString("password"))) {
+                return resultSet.getInt("id"); // Returnerer brugerens ID
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
     public boolean authenticateUser(String username, String providedPassword) {
         String sql = "SELECT password FROM Users WHERE username = ?";
         try (Connection con = DriverManager.getConnection(db_url, this.username, this.pw);
