@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller //localhost:8081
-@RequestMapping("")
+@RequestMapping("/wishlist")
 public class WishlistController {
     private WishlistService service;
     public WishlistController(WishlistService service) {
@@ -27,11 +27,11 @@ public class WishlistController {
     @PostMapping("/login")
     public String login(@ModelAttribute User user, Model model) {
         Integer userId = service.authenticateUserAndGetId(user.getUsername(), user.getPassword());
-        return "redirect:/" + userId + "/homepage";
+        return "redirect:/wishlist/" + userId + "/homepage";
     }
 
     /** user Forside **/
-    @GetMapping("{userID}/homepage")
+    @GetMapping("/{userID}/homepage")
     public String homepage (Model model, @PathVariable int userID) { //TODO SET PARAMETERVARIABLE
         //createWishList knap til oprettelse af wishlist
         model.addAttribute("wishlists", service.getWishlistsFromUserID(userID));

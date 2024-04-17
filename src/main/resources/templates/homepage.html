@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WishList</title>
-    <link rel="stylesheet" th:href="@{/main.css}">
+    <!-- Correct the path to the stylesheet -->
+    <link rel="stylesheet" th:href="@{/homepage.css}">
 </head>
 <body>
 
 <div>
-    <a href="#" th:href="@{/create}" class="button">Create Wishlist</a>
+    <a th:href="@{/wishlist/create}" class="button">Create Wishlist</a>
 </div>
 
-=======
-<!-- det her ser helt fucked ud men vi finde ud af hvordan det skal styles - Lasse-->
 <div class="wishlist-container" th:each="wishlist : ${wishlists}">
-    <h1 th:text="${wishlist.getName()}"></h1>
-    <h2 th:text="${wishlist.getDescription()}"></h2>
-    <form method="POST" th:action="@{'/' + ${wishlist.getId()} + '/delete-wishlist'}">
-        <button type="submit">Delete Wishlist</button>
-    </form>
+    <div class="welcome-box">
+        <h1 th:text="${wishlist.getName()}">Wishlist Name</h1>
+        <h2 th:text="${wishlist.getDescription()}">Wishlist Description</h2>
+        <form th:action="@{'/wishlist/' + ${wishlist.getId()} + '/delete-wishlist'}" method="post">
+            <button type="submit" class="button">Delete Wishlist</button>
+        </form>
+    </div>
 </div>
+
 </body>
 </html>
