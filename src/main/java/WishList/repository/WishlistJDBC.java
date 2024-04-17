@@ -209,7 +209,7 @@ public class WishlistJDBC {
     }
 
 
-    /** Create Wish**/
+    /**Opret Ønske**/
 
     public void insertWish(Wish wish,int wishlistId){
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){

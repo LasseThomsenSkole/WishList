@@ -50,7 +50,7 @@ public class WishlistController {
 
     /** Opret ønskeliste **/
 
-    @GetMapping("{userID}/create") //unik url
+    @GetMapping("{userID}/create")
     public String createWishList(Model model, @PathVariable int userID){
         model.addAttribute("userId", userID);
         model.addAttribute("wishlist", new Wishlist());
@@ -66,16 +66,15 @@ public class WishlistController {
     /** Opret ønske **/
     @GetMapping("/{wishlistID}/createWish") //jeg tror ikke den behøver userid
     public String createWish(Model model, @PathVariable int wishlistID){
-        model.addAttribute("wish", new Wish());
         model.addAttribute("wishlistId", wishlistID);
+        model.addAttribute("wish", new Wish());
         return "createWish";
     }
 
     @PostMapping("/{wishlistID}/createWish/save") //skal lige fikse redirect + så man ikke kan have samme username og password
     public String postWish(Wish wish, int wishlistID){
         service.insertWish(wish, wishlistID);
-        return "redirect: {wishlistID}";
-
+        return "redirect:/wishlist/" + wishlistID;
     }
 
     /** Rediger ønske **/
