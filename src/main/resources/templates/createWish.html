@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Tilføj et ønske</title>
-    <link href="/main.css" rel="stylesheet">
+    <link href="/createwishlist.css" rel="stylesheet">
 </head>
 <body>
-<h1>Tilføj et ønske</h1>
-<form class="wish-form" method="post" th:action="@{}" th:object="${wish}">
+<div class="container-ting">
+    <span class="container-title">Tilføj Ønske</span>
+
+    <form class="input-form" method="post" th:action="@{'/wishlist/' + ${wishlistID} + '/createWish'}" th:object="${wish}">
     <label for="product-name">Produkt navn</label>
     <input class="input" required id="product-name" th:field="*{name}">
-
     <label for="product-description">Beskrivelse af produktet</label>
     <input class="input" required id="product-description" th:field="*{description}">
-
     <label for="product-price">Pris</label>
     <input type="number" id="product-price" min="0" required th:field="*{price}"/>
-
     <label for="product-url" >Link til produktet</label>
-    <input id="product-url" th:field="*{url}" th:value=" ">
+    <input id="product-url" th:field="*{url}">
 
-    <button type="submit">Tilføj ønske</button>
-</form>
+    <button type="submit">Gem ønske</button>
+    </form>
+</div>
+
 </body>
 </html>
+
+

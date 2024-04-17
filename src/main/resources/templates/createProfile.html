@@ -4,26 +4,6 @@
     <meta charset="UTF-8">
     <title>Create Profile</title>
     <link rel="stylesheet" href="/static/main.css">
-    <style>
-        html, body {
-            height: 100%;
-        }
-        html {
-            display: table;
-            margin: auto;
-        }
-        body {
-            display: table-cell;
-            vertical-align: middle;
-        }
-        div  {
-            text-align: center;
-            width: 400px;
-            border: 2px solid black;
-            border-radius: 10px;
-            padding: 60px;
-        }
-    </style>
 </head>
 <body>
     <div class="container-login">
@@ -42,7 +22,7 @@
         <input class="input" required id="password" th:field="*{password}">
         <br>
         <br>
-        <form method="POST" th:action="@{'/create'}">
+        <form method="POST" th:action="@{'/createProfile/save'}">
             <button type="submit">Opret</button>
         </form>
 

@@ -3,9 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>wishlist</title>
-    <link rel="stylesheet" href="/static/main.css">
+    <link rel="stylesheet" th:href="@{/homepage.css}">
 </head>
 <body>
+<div>
+    <a th:href="@{'/wishlist/' + ${wishlistID} + '/createWish'}" class="button">Opret Ønske</a>
+</div>
+
+<h1 th:text="${wishlist.getName()}"></h1>
+
+<table>
+<thead>
+<tr>
+    <th>Wish Navn</th>
+    <th>Beskrivelse</th>
+    <th>Pris</th>
+    <th>Link</th>
+    <th>Handlinger</th>
+</tr>
+</thead>
+
+
+    <tbody>
+    <tr th:each="Wish : ${wishlist.getWishes}">
+        <td th:text="${Wish.getName()}">Wish Name</td>
+        <td th:text="${Wish.getDescription()}">Description</td>
+        <td th:text="${Wish.getPrice()}">Price</td>
+        <td th:block th:if="${Wish.getUrl() != null}">
+            <a th:href="@{${Wish.getUrl()}}">link til ønsket</a>>Link</td>
+        <td>
+            <a th:href="@{'/wishlist/' + ${wishlist.id} + '/edit'}">Edit</a> |
+            <form th:action="@{'/wishlist/' + ${wishlist.id} + '/delete-wishlist'}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<!--
 <div class="container-wishlist">
     <h1 th:text="${wishlist.getName()}"></h1>
     <h2 th:text="${wishlist.getDescription()}"></h2>
@@ -14,12 +51,13 @@
         <p th:text="${Wish.getDescription()}"></p>
         <h4 th:text="${Wish.getPrice()}"></h4>
 
-        <!-- det her er fordi url'en godt kan være null -->
+       det her er fordi url'en godt kan være null
         <th:block th:if="${Wish.getUrl() != null}">
             <a th:href="@{${Wish.getUrl()}}">link til ønsket</a>
         </th:block>
     </div>
 </div>
+-->
 
 </body>
 </html>

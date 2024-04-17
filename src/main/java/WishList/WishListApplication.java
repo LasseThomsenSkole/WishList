@@ -15,9 +15,8 @@ public class WishListApplication {
 // Continous Integration hjælp?
 
 /**TODO**/
-//Homepage skal kunne gå ind på en ønskeliste
-//Ønskelisteside - skal kunne tilføje et ønske dertil
-//forside skal vel være hvor man logger ind/kan lave en profil? - så
+//Ønskelisteside - skal kunne tilføje et ønske dertil - lasse
+//forside skal vel være hvor man logger ind/kan lave en profil?
 //Unittest - michelle
 //Github actions
 //Azure
