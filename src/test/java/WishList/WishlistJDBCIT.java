@@ -79,7 +79,7 @@ public class WishlistJDBCIT {
             preparedStatement.setString(2, wish.getDescription());
             preparedStatement.setDouble(3, wish.getPrice());
             preparedStatement.setString(4, wish.getUrl());
-            preparedStatement.setInt(5, wish.getId()); // Assuming you have a method to get the wishlist ID in your Wish class
+            preparedStatement.setInt(5, wish.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 wishId = resultSet.getInt("id");
