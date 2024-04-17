@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller //localhost:8081
 @RequestMapping("/wishlist")
 public class WishlistController {
@@ -33,9 +35,9 @@ public class WishlistController {
     /** user Forside **/
     @GetMapping("/{userID}/homepage")
     public String homepage (Model model, @PathVariable int userID) { //TODO SET PARAMETERVARIABLE
-        //createWishList knap til oprettelse af wishlist
-        model.addAttribute("wishlists", service.getWishlistsFromUserID(userID));
-        //knap til at se wishlisten
+        List<Wishlist> wishlists = service.getWishlistsFromUserID(userID);
+        model.addAttribute("wishlists", wishlists);
+        model.addAttribute("userId", userID);
         return "homepage";
     }
 
@@ -48,8 +50,9 @@ public class WishlistController {
 
     /** Opret ønskeliste **/
 
-    @GetMapping("/create") //unik url
-    public String createWishList(Model model){
+    @GetMapping("{userID}/create") //unik url
+    public String createWishList(Model model, @PathVariable int userID){
+        model.addAttribute("userId", userID);
         model.addAttribute("wishlist", new Wishlist());
         return "createWishList";
     }
@@ -57,7 +60,7 @@ public class WishlistController {
     @PostMapping("/{userID}/create") //TODO HVORDAN SKAL USERID VÆRE DER
     public String postWishList(@ModelAttribute Wishlist wishlist, @PathVariable int userID){
         service.createWishlist(wishlist, userID);
-        return "redirect:homepage"; //TODO: rettelse: return "redirect:/" + userID + "/homepage";
+        return "redirect:/wishlist/" + userID + "/homepage"; 
     }
     @GetMapping("/{wishlistID}/createWish") //jeg tror ikke den behøver userid
     public String createWish(Model model, @PathVariable int wishlistID){

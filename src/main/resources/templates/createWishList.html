@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Wishlist</title>
-    <link href="/static/main.css" rel="stylesheet">
+    <link href="/createwishlist.css" rel="stylesheet">
 </head>
 <body>
 <div class="container-ting">
     <span class="container-title">Lav din Ønskeseddel</span>
-    <!-- '1' tallet ved /wishlist/HER/create er en placeholder for userid TIL TEST -->
-    <form class="input-form" method="post" th:action="@{1/create}" th:object="${wishlist}">
+    <form class="input-form" method="post" th:action="@{'/wishlist/' + ${userId} + '/create'}" th:object="${wishlist}">
         <label for="product-name">Navn på ønskeseddel</label>
         <input class="input" required id="product-name" th:field="*{name}">
         <label for="product-description">Beskrivelse af ønskeseddel</label>
