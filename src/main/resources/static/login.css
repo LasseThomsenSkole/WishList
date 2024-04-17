@@ -12,7 +12,7 @@ body {
     font-family: 'Great Vibes', cursive; /* Apply the romantic font */
     font-size: 48px; /* Large font size */
     text-align: center; /* Center the title */
-    color: #8f56b3; /* A soft purple color */
+    color: rgba(147, 150, 213, 0.75); /* A soft purple color */
     margin-top: 20px; /* Space at the top */
     margin-bottom: 30px; /* Space at the bottom */
 }
@@ -50,7 +50,7 @@ body {
 .button {
     display: block; /* Each button will be on its own line */
     width: calc(100% - 20px); /* 100% of the container width minus any padding */
-    background-color: #8f56b3; /* Purple background */
+    background-color: rgba(147, 180, 213, 0.75); /* Purple background */
     color: white; /* White text */
     padding: 10px; /* Padding inside the button */
     margin: 10px auto 15px; /* 10px horizontal margin, 15px bottom margin */
@@ -78,11 +78,11 @@ body {
 }
 
 .button:hover {
-    background-color: #9f338c;
+    background-color: rgba(45, 116, 189, 0.75);
 }
 
 .button:active {
-    background-color: rgba(174, 105, 194, 0.86);
+    background-color: rgba(45, 116, 189, 0.75);
 }
 
 /* If you have specific styles for invalid input */

@@ -23,7 +23,7 @@ body {
     font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
-    color: #8f56b3;
+    color: rgba(147, 150, 213, 0.75);
 }
 
 .input-form {
@@ -45,7 +45,7 @@ body {
 }
 
 .input-form button {
-    background-color: #8f56b3;
+    background-color: rgba(147, 180, 213, 0.75);
     color: white;
     padding: 10px;
     margin-top: 20px;
@@ -58,9 +58,9 @@ body {
 }
 
 .input-form button:hover {
-    background-color: #9f338c;
+    background-color: rgba(45, 116, 189, 0.75);
 }
 
 .input-form button:active {
-    background-color: rgba(174, 105, 194, 0.86);
+    background-color: rgba(45, 116, 189, 0.75);
 }
