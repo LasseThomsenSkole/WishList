@@ -1,0 +1,91 @@
+body {
+    background-color: #f0f0f0; /* Let grå baggrund for kontrast */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.wishlist-title {
+    font-family: 'Great Vibes', cursive; /* Apply the romantic font */
+    font-size: 48px; /* Large font size */
+    text-align: center; /* Center the title */
+    color: #8f56b3; /* A soft purple color */
+    margin-top: 20px; /* Space at the top */
+    margin-bottom: 30px; /* Space at the bottom */
+}
+
+.login-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    width: 100%;
+}
+
+.create-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.create-form-label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.create-text-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.button {
+    display: block; /* Each button will be on its own line */
+    width: calc(100% - 20px); /* 100% of the container width minus any padding */
+    background-color: #8f56b3; /* Purple background */
+    color: white; /* White text */
+    padding: 10px; /* Padding inside the button */
+    margin: 10px auto 15px; /* 10px horizontal margin, 15px bottom margin */
+    border: none; /* No border */
+    border-radius: 4px; /* Slightly rounded corners */
+    cursor: pointer; /* Cursor indicates the element is clickable */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    text-align: center; /* Center the text inside the button */
+    text-decoration: none; /* No underline */
+    font-size: 16px; /* Uniform font size */
+    font-family: Arial, sans-serif; /* Consistent font family */
+}
+
+/* Remove the margin from the last button in the container */
+.login-container > .button:last-child {
+    margin-bottom: 0;
+}
+
+.login-button {
+    margin-bottom: 10px; /* Spacing between login and create profile buttons */
+}
+
+.create-profile-button {
+    background-color: #6c757d; /* Different color for create profile button */
+}
+
+.button:hover {
+    background-color: #9f338c;
+}
+
+.button:active {
+    background-color: rgba(174, 105, 194, 0.86);
+}
+
+/* If you have specific styles for invalid input */
+input:invalid {
+    border-color: #e74c3c;
+}
