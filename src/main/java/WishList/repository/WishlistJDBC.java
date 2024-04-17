@@ -13,7 +13,7 @@ import java.util.List;
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
     private String username = "root";
-    private String pw = "root";
+    private String pw = ".KasperNikolaj4576";
 
     //TODO til forside
     public List<Wishlist> getWishlistsByUserId(int userId) { //den virker
@@ -186,7 +186,7 @@ public class WishlistJDBC {
     }
 
     public boolean authenticateUser(String username, String providedPassword) {
-        String sql = "SELECT password FROM Users WHERE username = ?";
+        String sql = "SELECT password FROM Users WHERE name = ?";
         try (Connection con = DriverManager.getConnection(db_url, this.username, this.pw);
              PreparedStatement preparedStatement = con.prepareStatement(sql)) {
             preparedStatement.setString(1, username);
