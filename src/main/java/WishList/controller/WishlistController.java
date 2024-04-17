@@ -114,7 +114,7 @@ public class WishlistController {
     @PostMapping("/createProfile")
     public String postProfile(@ModelAttribute User user){
         service.createProfile(user);
-        return "redirect:/homepage"
+        return "redirect:/homepage";
      
     }
 
