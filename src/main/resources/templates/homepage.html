@@ -2,24 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WishList</title>
     <link rel="stylesheet" th:href="@{/homepage.css}">
 </head>
 <body>
 
-<div>
-    <a th:href="@{'/wishlist/' + ${userId} + '/create'}" class="button">Opret Wishlist</a>
-</div>
+<div class="button-container">
+    <h1>Velkommen til ønskelisten!</h1>
+    <a th:href="@{'/wishlist/' + ${userId} + '/create'}" class="button">Lav en ny ønskeliste</a>
 
-<h1>Wishlist Overview</h1>
+<div class="table-container">
+<h1>Ønskeliste overblik</h1>
 
 <table>
     <thead>
     <tr>
-        <th>Wishlist Navn</th>
+        <th>Navn</th>
         <th>Beskrivelse</th>
-        <th>Handlinger</th>
+        <th>Muligheder</th>
+
     </tr>
     </thead>
     <tbody>
@@ -27,15 +30,14 @@
         <td th:text="${wishlist.name}">Wishlist Name</td>
         <td th:text="${wishlist.description}">Description</td>
         <td>
-            <a th:href="@{'/wishlist/' + ${wishlist.id}}">View</a> |
-            <a th:href="@{'/wishlist/' + ${wishlist.id} + '/edit'}">Edit</a> |
+            <a th:href="@{'/wishlist/' + ${wishlist.id}}" class="button delete-button">Se ønsker</a> |
             <form th:action="@{'/wishlist/' + ${wishlist.id} + '/delete-wishlist'}" method="post" style="display:inline;">
-                <button type="submit">Delete</button>
+                <button type="submit" class="button delete-button">Slet</button>
             </form>
         </td>
     </tr>
     </tbody>
 </table>
-
+</div>
 </body>
 </html>
