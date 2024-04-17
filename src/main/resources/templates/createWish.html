@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Tilføj et ønske</h1>
-<form class="wish-form" method="post" th:action="@{}" th:object="${wish}">
+<form class="wish-form" method="post" th:action="@{'/wishlist/'+ ${wishlistID} + '/create/save'}" th:object="${wish}">
     <label for="product-name">Produkt navn</label>
     <input class="input" required id="product-name" th:field="*{name}">
 
@@ -24,3 +24,5 @@
 </form>
 </body>
 </html>
+
+

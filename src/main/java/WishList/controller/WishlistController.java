@@ -62,13 +62,23 @@ public class WishlistController {
         service.createWishlist(wishlist, userID);
         return "redirect:/wishlist/" + userID + "/homepage"; 
     }
+
+    /** Opret ønske **/
     @GetMapping("/{wishlistID}/createWish") //jeg tror ikke den behøver userid
     public String createWish(Model model, @PathVariable int wishlistID){
         model.addAttribute("wish", new Wish());
         model.addAttribute("wishlistId", wishlistID);
         return "createWish";
     }
-    // Metode til at vise formular for redigering af et ønske
+
+    @PostMapping("/{wishlistID}/createWish/save") //skal lige fikse redirect + så man ikke kan have samme username og password
+    public String postWish(Wish wish, int wishlistID){
+        service.insertWish(wish, wishlistID);
+        return "redirect: {wishlistID}";
+
+    }
+
+    /** Rediger ønske **/
     @GetMapping("/{wishlistId}/wish/{wishId}/edit")
     public String showEditWishForm(@PathVariable int wishlistId, @PathVariable int wishId, Model model) {
         Wish wish = service.getWishById(wishId);
@@ -80,14 +90,13 @@ public class WishlistController {
             return "redirect:/wishlist/" + wishlistId;
         }
     }
-
-    /** Redigering af ønskeliste **/
     @PostMapping("/{wishlistId}/wish/{wishId}/update")
     public String updateWish(@PathVariable int wishlistId, @PathVariable int wishId,
                              @ModelAttribute("wish") Wish wish, Model model) {
         service.updateWish(wishId, wish);
         return "redirect:/wishlist/";
     }
+
     /** Slet fra ønskeliste **/
     @DeleteMapping("/{wishID}/delete-wish")
     public String deleteWish(@PathVariable int wishID){
@@ -103,16 +112,18 @@ public class WishlistController {
         return "redirect:/" + userID +"/homepage";
     }
 
+    /**Opret Profil**/
+
     @GetMapping("/createProfile")
-    public String createProfile(Model model){
+    public String createProfile( Model model){
         model.addAttribute("user", new User());
         return "createProfile";
     }
 
-    @PostMapping("/createProfile")
-    public String postProfile(@ModelAttribute User user){
+    @PostMapping("/createProfile/save") //skal lige fikse redirect + så man ikke kan have samme username og password
+    public String postProfile(User user){
         service.createProfile(user);
-        return "redirect:/homepage";
+        return "redirect: homepage";
      
     }
 

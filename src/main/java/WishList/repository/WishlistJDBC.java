@@ -13,7 +13,7 @@ import java.util.List;
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
     private String username = "root";
-    private String pw = ".KasperNikolaj4576";
+    private String pw = "Andrea1999!";
 
     //TODO til forside
     public List<Wishlist> getWishlistsByUserId(int userId) { //den virker
@@ -141,34 +141,8 @@ public class WishlistJDBC {
         return null;
     }
 
-    /** LOGIN - kig gerne på det**/ //for login - compare userid to password
-    public User compareUserIdToPassword (int ID) {
-        try(Connection con = DriverManager.getConnection(db_url, username, pw)) {
-            String SQL =
-                    "SELECT password" +
-                    "FROM Users" +
-                    "WHERE id = ?";
-            PreparedStatement preparedStatement = con.prepareStatement(SQL);
-            preparedStatement.setInt(1, ID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
-                String pw = resultSet.getString("password");
-                String providedPassword ="password123"; //det som person skriver ind som password TODO burde være en parameter
+    /** LOGIN **/ //for login - compare userid to password
 
-                if (pw.equals(providedPassword)) {
-                    System.out.println("Logger ind"); //skal outputte noget på html siden
-                } else {
-                    System.out.println("Forkert password"); //skal outputte noget på html siden
-                }
-            } else {
-                System.out.println("username ikke fundet"); //skal outputte noget på html siden
-
-            }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
 
     public Integer authenticateUserAndGetId(String username, String providedPassword) {
         String sql = "SELECT id, password FROM Users WHERE name = ?";
@@ -201,18 +175,7 @@ public class WishlistJDBC {
         }
     }
 
-    // Opretter en ny bruger i databasen
-    public void save(User user) {
-        String sql = "INSERT INTO Users (username, password) VALUES (?, ?)";
-        try (Connection conn = DriverManager.getConnection(db_url, username, pw);
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to save user to database", e);
-        }
-    }
+  /**Opret Profil**/
 
     public User createProfile(User user) {
         try(Connection con = DriverManager.getConnection(db_url,username,pw)) {
@@ -230,7 +193,6 @@ public class WishlistJDBC {
     }
 
 
-
     public void createWishlist(Wishlist wishlist, int userId){
         try(Connection con = DriverManager.getConnection(db_url, username, pw)){
             String SQL =
@@ -245,6 +207,9 @@ public class WishlistJDBC {
             throw new RuntimeException(e);
         }
     }
+
+
+    /** Create Wish**/
 
     public void insertWish(Wish wish,int wishlistId){
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
@@ -262,6 +227,10 @@ public class WishlistJDBC {
             throw new RuntimeException(e);
         }
     }
+
+
+
+
 
     public void updateWish(int wishID, Wish updatedwish) {
         try(Connection con = DriverManager.getConnection(db_url, username, pw)) {

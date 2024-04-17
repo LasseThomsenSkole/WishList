@@ -37,9 +37,6 @@ public class WishlistService {
         return repository.authenticateUserAndGetId(username, password);
     }
 
-    public void createUser(User user) {
-        repository.save(user);
-    }
 
     public Wish getWishById(int id) {
         return repository.getWishById(id);
