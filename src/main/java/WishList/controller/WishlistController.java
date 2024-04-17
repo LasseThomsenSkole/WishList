@@ -26,13 +26,8 @@ public class WishlistController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute User user, Model model) {
-        boolean isAuthenticated = service.authenticateUser(user.getUsername(), user.getPassword());
-        if (isAuthenticated) {
-            return "redirect:/homepage"; // Redirect to user homepage
-        } else {
-            model.addAttribute("error", "Invalid username or password");
-            return "login"; // Stay on login page
-        }
+        Integer userId = service.authenticateUserAndGetId(user.getUsername(), user.getPassword());
+        return "redirect:/" + userId + "/homepage";
     }
 
     /** user Forside **/
