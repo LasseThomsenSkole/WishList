@@ -33,6 +33,10 @@ public class WishlistService {
         return repository.authenticateUser(username, password);
     }
 
+    public Integer authenticateUserAndGetId(String username, String password) {
+        return repository.authenticateUserAndGetId(username, password);
+    }
+
     public void createUser(User user) {
         repository.save(user);
     }

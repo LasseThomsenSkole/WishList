@@ -35,21 +35,6 @@ public class WishlistController {
         }
     }
 
-    /**Create Profile**/
-
-    @GetMapping("/createProfile")
-    public String createProfile(Model model){
-        model.addAttribute("user", new User());
-        return "createProfile";
-    }
-
-    @PostMapping("/createProfile")
-    public String postProfile(@ModelAttribute User user){
-        service.createProfile(user);
-        return "redirect:/homepage";
-
-    }
-
     /** user Forside **/
     @GetMapping("{userID}/homepage")
     public String homepage (Model model, @PathVariable int userID) { //TODO SET PARAMETERVARIABLE
@@ -79,17 +64,11 @@ public class WishlistController {
         service.createWishlist(wishlist, userID);
         return "redirect:homepage"; //TODO: rettelse: return "redirect:/" + userID + "/homepage";
     }
-
     @GetMapping("/{wishlistID}/createWish") //jeg tror ikke den behøver userid
     public String createWish(Model model, @PathVariable int wishlistID){
         model.addAttribute("wish", new Wish());
         model.addAttribute("wishlistId", wishlistID);
         return "createWish";
-    }
-    @PostMapping("/{wishlistID}/createWish")
-    public String createWish(@ModelAttribute Wish wish, @PathVariable int wishlistID){
-        service.insertWish(wish, wishlistID);
-        return "redirect:" + wishlistID;
     }
     // Metode til at vise formular for redigering af et ønske
     @GetMapping("/{wishlistId}/wish/{wishId}/edit")
@@ -126,6 +105,18 @@ public class WishlistController {
         return "redirect:/" + userID +"/homepage";
     }
 
+    @GetMapping("/createProfile")
+    public String createProfile(Model model){
+        model.addAttribute("user", new User());
+        return "createProfile";
+    }
+
+    @PostMapping("/createProfile")
+    public String postProfile(@ModelAttribute User user){
+        service.createProfile(user);
+        return "redirect:/homepage";
+     
+    }
 
 
 }
