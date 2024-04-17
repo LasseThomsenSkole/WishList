@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Wishlist</title>
-  
-    <link href="/homepage.css" rel="stylesheet">
+    <link href="../static/homepage.css" th:href="@{/homepage.css}" rel="stylesheet">
 </head>
 <body class="container-login">
-<form th:action="@{/login}" th:object="${user}" class="create-form" method="post">
+<form th:action="@{/wishlist/login}" th:object="${user}" class="create-form" method="post">
     <div class="form-group">
         <label class="create-form-label" for="username">Brugernavn</label>
         <br>
@@ -23,6 +22,6 @@
     <button type="submit" class="button">Login</button>
 </form>
 <br><br>
-<a href="/createProfile" class="button">Opret profil</a>
+<a th:href="@{/wishlist/createProfile}" class="button">Opret profil</a>
 </body>
 </html>
