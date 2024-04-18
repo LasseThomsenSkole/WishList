@@ -12,7 +12,7 @@ import java.util.List;
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
     private String username = "root";
-    private String pw = "-mads18B";
+    private String pw = "Andrea1999!";
 
     //TODO til forside
     public List<Wishlist> getWishlistsByUserId(int userId) { //den virker
@@ -159,7 +159,7 @@ public class WishlistJDBC {
         return null;
     }
 
-    public boolean authenticateUser(String username, String providedPassword) {
+    public boolean authenticateUser(String username, String providedPassword) { //gør ikke brug af - slette?
         String sql = "SELECT password FROM Users WHERE name = ?";
         try (Connection con = DriverManager.getConnection(db_url, this.username, this.pw);
              PreparedStatement preparedStatement = con.prepareStatement(sql)) {
