@@ -12,7 +12,7 @@ import java.util.List;
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
     private String username = "root";
-    private String pw = "-mads18B";
+    private String pw = "root";
 
     //TODO til forside
     public List<Wishlist> getWishlistsByUserId(int userId) { //den virker
@@ -211,7 +211,7 @@ public class WishlistJDBC {
 
     /**Opret Ønske**/
 
-    public void createWish(Wish wish, int wishlistId){
+    public void insertWish(Wish wish,int wishlistId){
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
             String SQL =
                     "INSERT INTO Wish (name, description, price, url, wishlist_id) " +
@@ -277,6 +277,7 @@ public class WishlistJDBC {
             throw new RuntimeException(e);
         }
     }
+
     public int getUserIDFromWishlistID(int wishlistID){
         try(Connection con = DriverManager.getConnection(db_url, username, pw)) {
             String SQL = "SELECT w.id AS wishlist_id, u.id AS user_id " +

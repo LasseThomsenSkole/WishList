@@ -44,9 +44,7 @@ public class WishlistController {
     @GetMapping("/{wishlistID}") //viser en wishlist via wishlistID
     public String getWishlist(Model model, @PathVariable int wishlistID){
         model.addAttribute("wishlist", service.getWishlist(wishlistID));
-        List<Wish> wishList = (List<Wish>) service.getWishById(wishlistID);
-        model.addAttribute("wishList", wishList);
-        return "getWishlist"; //skal den ik returnere en html?
+        return "getWishlist"; //det er en html... jeg har bare lavet et dårligt navn - Lasse :)
     }
 
     /** Opret ønskeliste **/
@@ -92,8 +90,8 @@ public class WishlistController {
     }
     @PostMapping("/{wishlistId}/wish/{wishId}/edit")
     public String editWish(@PathVariable int wishlistId, @PathVariable int wishId,
-                             @ModelAttribute Wish updatedWish, Model model) {
-        service.editWish(wishId, updatedWish);
+                             @ModelAttribute Wish wish, Model model) {
+        service.editWish(wishId, wish);
         model.addAttribute("wishlistId", wishlistId);
         return "redirect:/wishlist/" + wishlistId;
     }
@@ -102,7 +100,7 @@ public class WishlistController {
     @PostMapping("/{wishID}/delete-wish")
     public String deleteWish(@PathVariable int wishID, @RequestParam("wishlistId") int wishlistId){
          service.deleteWish(wishID);
-        return "redirect:/wishlist/" + wishlistId; // todo: skal det være return "redirect:/wishlist/" + wishlistId; ??
+        return "redirect:/wishlist/" + wishlistId;
     }
 
     /** Slet ønskeliste **/

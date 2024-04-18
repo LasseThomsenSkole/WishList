@@ -43,7 +43,7 @@ public class WishlistService {
     }
 
     public void insertWish(Wish wish, int wishlistID){
-        repository.createWish(wish, wishlistID);
+        repository.insertWish(wish, wishlistID);
     }
 
     public void editWish(int ID, Wish updatedWish) {
