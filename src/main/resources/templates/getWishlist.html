@@ -9,7 +9,6 @@
 <div>
     <a th:href="@{'/wishlist/' + ${wishlistID} + '/createWish'}" class="button">Opret Ønske</a>
 </div>
-
 <h1 th:text="${wishlist.getName()}"></h1>
 
 <table>
@@ -33,16 +32,12 @@
             <a th:href="@{${Wish.getUrl()}}">link til ønsket</a></td>
         <td>
             <th:block th:each="wish : ${wishList}">
-                <a th:href="@{${wishlist.id} + '/wish/' + ${wish.id} + '/edit-form'}" method="get" class="button">Edit</a>
+                <a th:href="@{${wishlist.id} + '/wish/' + ${wish.id} + '/edit-form'}" methods="get" class="button">Edit</a>
             </th:block>
             <form th:action="@{'/wishlist/' + ${Wish.id} + '/delete-wish'}" method="post" style="display:inline;">
                 <input type="hidden" name="wishlistId" th:value="${wishlist.id}" />
                 <button type="submit">Delete</button>
             </form>
-            <!--<form th:action="'/wishlist/' + ${wishlistId} + '/wish/' + ${Wish.Id} + '/edit-form'" style="display:inline;">
-
-                <button type="submit">Edit</button>
-            </form> --> <!-- edit button skal laves på den her måde i think, men den vil ikke fungere - andrea -->
         </td>
     </tr>
     </tbody>

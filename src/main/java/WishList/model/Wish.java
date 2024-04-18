@@ -1,5 +1,5 @@
 package WishList.model;
-//SKAL MÅSKE VÆRE ET ANDET STED IDK
+
 public class Wish {
     private String name;
     private String description;
@@ -46,15 +46,8 @@ public class Wish {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }

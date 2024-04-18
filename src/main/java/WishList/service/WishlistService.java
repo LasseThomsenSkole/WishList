@@ -25,13 +25,6 @@ public class WishlistService {
         repository.createWishlist(wishlist, userId);
     }
 
-    public User getUsernameFromID(int ID) {
-        return repository.getUsernameFromID(ID);
-    }
-
-    public boolean authenticateUser(String username, String password) {
-        return repository.authenticateUser(username, password);
-    }
 
     public Integer authenticateUserAndGetId(String username, String password) {
         return repository.authenticateUserAndGetId(username, password);

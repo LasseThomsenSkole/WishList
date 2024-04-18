@@ -1,7 +1,5 @@
 package WishList.model;
 
-import java.util.List;
-
 public class User {
     private Long id;
     private String username;
@@ -32,12 +30,6 @@ public class User {
         return username;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public void setUsername(String username) {
-            this.username = username;
-    }
+
 
 }

@@ -42,10 +42,6 @@ public class Wishlist {
         this.name = name;
     }
 
-    public void setWishes(List<Wish> wishes){
-        this.wishes = wishes;
-    }
-
     public int getId() {return id;}
 
 
