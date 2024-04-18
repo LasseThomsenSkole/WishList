@@ -11,11 +11,11 @@ import java.util.List;
 @Repository
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
-    private String username = "root";
-    private String pw = "root";
+    private final String username = "root";
+    private final String pw = "Andrea1999!";
 
     //TODO til forside
-    public List<Wishlist> getWishlistsByUserId(int userId) { //den virker
+    public List<Wishlist> getWishlistsByUserId(int userId) {
         List<Wishlist> wishlists = new ArrayList<>();
 
         try (Connection con = DriverManager.getConnection(db_url, username, pw)) {
@@ -75,7 +75,6 @@ public class WishlistJDBC {
                 }
             }
 
-            // Tjek at ønskelisten blev fundet før vi forsøger at hente ønsker
             if (wishlist != null) {
                 // Trin 2: Hent Wishes for den givne Wishliste
                 String sqlWishes = "SELECT id, name, description, url, price FROM Wish WHERE wishlist_id = ?;";
@@ -99,7 +98,7 @@ public class WishlistJDBC {
         return wishlist;
     }
 
-    public Wish getWishById(int wishId) { //relevant for update og edit af wish
+    public Wish getWishById(int wishId) {
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
             String SQL =
                     "SELECT * FROM Wish " +
@@ -141,7 +140,7 @@ public class WishlistJDBC {
         return null;
     }
 
-    /** LOGIN **/ //for login - compare userid to password
+    /** LOGIN **/
 
 
     public Integer authenticateUserAndGetId(String username, String providedPassword) {
@@ -157,22 +156,6 @@ public class WishlistJDBC {
             throw new RuntimeException(e);
         }
         return null;
-    }
-
-    public boolean authenticateUser(String username, String providedPassword) {
-        String sql = "SELECT password FROM Users WHERE name = ?";
-        try (Connection con = DriverManager.getConnection(db_url, this.username, this.pw);
-             PreparedStatement preparedStatement = con.prepareStatement(sql)) {
-            preparedStatement.setString(1, username);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                String storedPassword = resultSet.getString("password");
-                return providedPassword.equals(storedPassword); // Sammenligner plaintext kodeord
-            }
-            return false; // Brugernavn ikke fundet eller kodeord matcher ikke
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
   /**Opret Profil**/

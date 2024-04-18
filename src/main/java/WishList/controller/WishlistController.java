@@ -13,7 +13,7 @@ import java.util.List;
 @Controller //localhost:8081
 @RequestMapping("/wishlist")
 public class WishlistController {
-    private WishlistService service;
+    private final WishlistService service;
     public WishlistController(WishlistService service) {
         this.service = service;
     }
@@ -26,7 +26,7 @@ public class WishlistController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute User user, Model model) {
+    public String login(@ModelAttribute User user) {
         Integer userId = service.authenticateUserAndGetId(user.getUsername(), user.getPassword());
         return "redirect:/wishlist/" + userId + "/homepage";
     }
@@ -41,7 +41,7 @@ public class WishlistController {
     }
 
     /** Wishlist page **/
-    @GetMapping("/{wishlistID}") //viser en wishlist via wishlistID
+    @GetMapping("/{wishlistID}")
     public String getWishlist(Model model, @PathVariable int wishlistID){
         model.addAttribute("wishlist", service.getWishlist(wishlistID));
         return "getWishlist"; //det er en html... jeg har bare lavet et dårligt navn - Lasse :)
@@ -56,21 +56,21 @@ public class WishlistController {
         return "createWishList";
     }
 
-    @PostMapping("/{userID}/create") //TODO HVORDAN SKAL USERID VÆRE DER
+    @PostMapping("/{userID}/create")
     public String postWishList(@ModelAttribute Wishlist wishlist, @PathVariable int userID){
         service.createWishlist(wishlist, userID);
         return "redirect:/wishlist/" + userID + "/homepage"; 
     }
 
     /** Opret ønske **/
-    @GetMapping("/{wishlistID}/createWish") //jeg tror ikke den behøver userid
+    @GetMapping("/{wishlistID}/createWish")
     public String createWish(Model model, @PathVariable int wishlistID){
         model.addAttribute("wishlistId", wishlistID);
         model.addAttribute("wish", new Wish());
         return "createWish";
     }
 
-    @PostMapping("/{wishlistID}/createWish/save") //skal lige fikse redirect
+    @PostMapping("/{wishlistID}/createWish/save")
     public String postWish(@ModelAttribute Wish wish, @PathVariable int wishlistID){
         service.insertWish(wish, wishlistID);
         return "redirect:/wishlist/" + wishlistID;
@@ -104,7 +104,7 @@ public class WishlistController {
     }
 
     /** Slet ønskeliste **/
-    @PostMapping("/{wishlistID}/delete-wishlist") //det skal være postmapping med mindre vi ville bruge JavaScript
+    @PostMapping("/{wishlistID}/delete-wishlist")
     public String deleteWishlist (@PathVariable int wishlistID) {
         int userID = service.getUserIDFromWishlistID(wishlistID);
         service.deleteWishlist(wishlistID);
@@ -119,7 +119,7 @@ public class WishlistController {
         return "createProfile";
     }
 
-    @PostMapping("/createProfile/save") //skal lige fikse redirect + så man ikke kan have samme username og password
+    @PostMapping("/createProfile/save")
     public String postProfile(@ModelAttribute User user){
         service.createProfile(user);
         return "redirect:/wishlist";
