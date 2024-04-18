@@ -120,10 +120,9 @@ public class WishlistController {
     }
 
     @PostMapping("/createProfile/save") //skal lige fikse redirect + så man ikke kan have samme username og password
-    public String postProfile(User user){
+    public String postProfile(@ModelAttribute User user){
         service.createProfile(user);
-        return "redirect: homepage";
-     
+        return "redirect:/wishlist";
     }
 
 
