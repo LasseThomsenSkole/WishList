@@ -4,7 +4,6 @@ import WishList.model.User;
 import WishList.model.Wish;
 import WishList.model.Wishlist;
 import WishList.service.WishlistService;
-import org.h2.engine.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +44,8 @@ public class WishlistController {
     @GetMapping("/{wishlistID}") //viser en wishlist via wishlistID
     public String getWishlist(Model model, @PathVariable int wishlistID){
         model.addAttribute("wishlist", service.getWishlist(wishlistID));
+        List<Wish> wishList = (List<Wish>) service.getWishById(wishlistID);
+        model.addAttribute("wishList", wishList);
         return "getWishlist"; //skal den ik returnere en html?
     }
 
@@ -78,7 +79,7 @@ public class WishlistController {
     }
 
     /** Rediger ønske **/
-    @GetMapping("/{wishlistId}/wish/{wishId}/edit")
+    @GetMapping("/{wishlistId}/wish/{wishId}/edit-form")
     public String showEditWishForm(@PathVariable int wishlistId, @PathVariable int wishId, Model model) {
         Wish wish = service.getWishById(wishId);
         if (wish != null) {
@@ -89,11 +90,12 @@ public class WishlistController {
             return "redirect:/wishlist/" + wishlistId;
         }
     }
-    @PostMapping("/{wishlistId}/wish/{wishId}/update")
-    public String updateWish(@PathVariable int wishlistId, @PathVariable int wishId,
-                             @ModelAttribute("wish") Wish wish, Model model) {
-        service.updateWish(wishId, wish);
-        return "redirect:/wishlist/";
+    @PostMapping("/{wishlistId}/wish/{wishId}/edit")
+    public String editWish(@PathVariable int wishlistId, @PathVariable int wishId,
+                             @ModelAttribute Wish updatedWish, Model model) {
+        service.editWish(wishId, updatedWish);
+        model.addAttribute("wishlistId", wishlistId);
+        return "redirect:/wishlist/" + wishlistId;
     }
 
     /** Slet fra ønskeliste **/

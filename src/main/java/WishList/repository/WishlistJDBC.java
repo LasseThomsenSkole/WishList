@@ -1,7 +1,7 @@
 package WishList.repository;
 import WishList.model.Wish;
 import WishList.model.Wishlist;
-import WishList.model.User;;
+import WishList.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -12,7 +12,7 @@ import java.util.List;
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
     private String username = "root";
-    private String pw = "Andrea1999!";
+    private String pw = "-mads18B";
 
     //TODO til forside
     public List<Wishlist> getWishlistsByUserId(int userId) { //den virker
@@ -108,11 +108,12 @@ public class WishlistJDBC {
             preparedStatement.setInt(1, wishId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
                 double price = resultSet.getDouble("price");
                 String url = resultSet.getString("url");
-                return new Wish(name, description, price, url);
+                return new Wish(id, name, description, price, url);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -210,7 +211,7 @@ public class WishlistJDBC {
 
     /**Opret Ønske**/
 
-    public void insertWish(Wish wish,int wishlistId){
+    public void createWish(Wish wish, int wishlistId){
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
             String SQL =
                     "INSERT INTO Wish (name, description, price, url, wishlist_id) " +
@@ -231,7 +232,7 @@ public class WishlistJDBC {
 
 
 
-    public void updateWish(int wishID, Wish updatedwish) {
+    public void editWish(int wishID, Wish updatedwish) {
         try(Connection con = DriverManager.getConnection(db_url, username, pw)) {
             String SQL =
                     "UPDATE Wish " +
@@ -243,6 +244,7 @@ public class WishlistJDBC {
             preparedStatement.setDouble(3, updatedwish.getPrice());
             preparedStatement.setString(4, updatedwish.getUrl());
             preparedStatement.setInt(5, wishID);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -43,11 +43,11 @@ public class WishlistService {
     }
 
     public void insertWish(Wish wish, int wishlistID){
-        repository.insertWish(wish, wishlistID);
+        repository.createWish(wish, wishlistID);
     }
 
-    public void updateWish(int ID, Wish updatedWish) {
-        repository.updateWish(ID, updatedWish);
+    public void editWish(int ID, Wish updatedWish) {
+        repository.editWish(ID, updatedWish);
     }
 
     public void deleteWish(int ID) {

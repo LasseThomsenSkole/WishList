@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -110,10 +111,17 @@ public class WishlistJDBCIT {
         Wish found = repository.getWishById(id);
         assertThat(found).isNotNull();
         assertThat(found.getId()).isEqualTo(id);
+    }
+
+   /* @MockBean
+    private DataSource dataSource;
+
+   /*@Autowired
+    public WishlistJDBCIT(WishlistJDBC repository) {
+        this.repository = repository;
     }*/
 
-/*
-    @Test
+   /* @Test
     public void testCreateWishList() { //HVORFOR ER ALT NULL LDWKJHFBWELSDKHFB
         String name = "test name";
         String description = "test description";

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Rediger Ønske</title>
-    <link href="/editwishlist.css" rel="stylesheet">
+    <link href="/createwishlist.css" rel="stylesheet">
 </head>
 <body>
 <div class="container-ting">
     <span class="container-title">Rediger Ønske</span>
 
-    <form class="input-form" method="post" th:action="@{'/wishlist/' + ${wish.wishlistId} + '/wish/' + ${wish.id} + '/update'}" th:object="${wish}">
+    <form class="input-form" method="post" th:action="@{'/wishlist/' + ${wishlistId} + '/wish/' + ${wish.id} + '/edit'}" th:object="${wish}">
         <label for="product-name">Produkt navn</label>
         <input class="input" required id="product-name" th:field="*{name}">
         <label for="product-description">Beskrivelse af produktet</label>

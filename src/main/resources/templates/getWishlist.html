@@ -32,12 +32,13 @@
         <td th:block th:if="${Wish.getUrl() != null}">
             <a th:href="@{${Wish.getUrl()}}">link til ønsket</a></td>
         <td>
-            <a th:href="@{'/wishlist/' + ${wishlist.id} + '/edit'}">Edit</a> |
+            <th:block th:each="wish : ${wishList}">
+                <a th:href="@{${wishlist.id} + '/wish/' + ${wish.id} + '/edit-form'}" method="get" class="button">Edit</a>
+            </th:block>
             <form th:action="@{'/wishlist/' + ${Wish.id} + '/delete-wish'}" method="post" style="display:inline;">
                 <input type="hidden" name="wishlistId" th:value="${wishlist.id}" />
                 <button type="submit">Delete</button>
             </form>
-
         </td>
     </tr>
     </tbody>
