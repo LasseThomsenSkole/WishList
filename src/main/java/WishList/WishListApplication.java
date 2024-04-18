@@ -16,9 +16,7 @@ public class WishListApplication {
 
 /**TODO**/
 //Ønskelisteside - skal kunne tilføje et ønske dertil - lasse
-//forside skal vel være hvor man logger ind/kan lave en profil?
 //Unittest - michelle
 //Github actions
 //Azure
-//CSS til at fungere på alles computere - fie
 //Tilbage knapper på hele hjemmesiden!!!!

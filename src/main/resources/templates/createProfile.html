@@ -3,27 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Profile</title>
-    <link rel="stylesheet" href="/static/main.css">
+    <link rel="stylesheet" th:href="@{/login.css}">
 </head>
-<body>
-    <div class="container-login">
-        <span class="container-title">Opret profil</span>
-
-
-    <form class="input-form" method="post" th:action="@{/wishlist/createProfile/save}" th:object="${user}">
-        <br>
+<body class="container-login">
+<form class="input-form" method="post" th:action="@{/wishlist/createProfile/save}" th:object="${user}">
+    <div>
+        <h1 class="wishlist-title">Opret profil</h1>
         <label class="create-form-label" for="username">Brugernavn</label>
         <br>
-        <input class="input" required id="username" th:field="*{username}">
-        <br>
-        <br>
+        <input class="create-text-input" required id="username" th:field="*{username}">
+        <br><br>
+    </div>
+    <div>
         <label class="create-form-label" for="password">Kodeord</label>
         <br>
-        <input class="input" required id="password" th:field="*{password}">
-        <br>
-        <br>
-            <button type="submit">Opret</button>
-
+        <input class="create-text-input" required id="password" th:field="*{password}">
+        <br><br>
+    </div>
+    <button type="submit">Opret</button>
 
     </form>
 

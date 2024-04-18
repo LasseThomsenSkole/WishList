@@ -1,8 +1,10 @@
 package WishList;
 
+import WishList.model.IncorrectWishException;
 import WishList.model.Wish;
 import WishList.model.Wishlist;
 import WishList.repository.WishlistJDBC;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,25 +13,96 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class) // extender JUnit
 @SpringJUnitConfig
 public class WishlistJDBCIT {
+
     @Autowired
     private WishlistJDBC repository;
 
-    //@Value("${spring.datasource.url}")
-    private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB";
-    //@Value("${spring.datasource.username}")
-    private String username = "root";
-   // @Value("${spring.datasource.password}")
-    private String pw = "-mads18B";
+
+    @Value("jdbc:mysql://localhost:3306/WishlisttestDB")
+    private String db_url;
+
+    @Value("root")
+    private String uid;
+
+    @Value("Andrea1999!")
+    private String pwd;
+
+
+    @BeforeEach
+    public void setup() { //fungerer
+        try (
+                Connection conn =
+                        DriverManager.getConnection(db_url, uid, pwd)) {
+            Statement stmt = conn.createStatement();
+
+            String initSchema = "CREATE SCHEMA IF NOT EXISTS WISHLISTDB";
+            String dropTableUsers = "drop table if exists users";
+            String dropTableWish = "drop table if exists wish";
+            String dropTableWishlist = "drop table if exists wishlists";
+            stmt.addBatch(initSchema);
+            stmt.addBatch(dropTableUsers);
+            stmt.addBatch(dropTableWish);
+            stmt.addBatch(dropTableWishlist);
+            String createTable = "CREATE TABLE wishlists " +
+                    "(id INTEGER, " +
+                    " name VARCHAR(30), " +
+                    " description VARCHAR(30), " +
+                    " user_id INTEGER, " +
+                    " PRIMARY KEY ( id ))";
+            stmt.addBatch(createTable);
+            stmt.executeBatch();
+            System.out.println("Database created");
+
+            String sqlInsertRow = "INSERT INTO wishlists VALUES (10,'Fødselsdag','Til min fødselsdag', 11)";
+            stmt.addBatch(sqlInsertRow);
+            sqlInsertRow = "INSERT INTO wishlists VALUES (20,'Jul','Julegaver', 21)";
+            stmt.addBatch(sqlInsertRow);
+            sqlInsertRow = "INSERT INTO wishlists VALUES (30,'Bryllup','Bryllupsgaver', 31)";
+            stmt.addBatch(sqlInsertRow);
+            sqlInsertRow = "INSERT INTO wishlists VALUES(40,'Alle ønsker','Liste over alle mine ønsker', 41)";
+            stmt.addBatch(sqlInsertRow);
+            int rows[] = stmt.executeBatch();
+            System.out.println("Inserted " + rows.length + " records into the table");
+        } catch (SQLException e) {
+            System.out.println("Database call went wrong" + e.getMessage());
+        }
+    }
+
+    @Test
+    void findWishlistByID() throws SQLException {
+        Wishlist found = repository.getWishlist(10);
+        assertEquals("Fødselsdag", found.getName());
+    }
+
+    @Test
+    void findWishlist30() throws SQLException {
+        Wishlist found = repository.getWishlist(30);
+        assertNotNull(found);
+    }
+
+
+    @Test
+    public void deleteWishlist() throws IncorrectWishException {
+        repository.deleteWishlist(20);
+    }
+
+
+    /*
+
 
     @Test
     public void getWishById() {
@@ -37,16 +110,10 @@ public class WishlistJDBCIT {
         Wish found = repository.getWishById(id);
         assertThat(found).isNotNull();
         assertThat(found.getId()).isEqualTo(id);
-    }
-   /* @MockBean
-    private DataSource dataSource;
-
-   /*@Autowired
-    public WishlistJDBCIT(WishlistJDBC repository) {
-        this.repository = repository;
     }*/
 
-   /* @Test
+/*
+    @Test
     public void testCreateWishList() { //HVORFOR ER ALT NULL LDWKJHFBWELSDKHFB
         String name = "test name";
         String description = "test description";
@@ -62,8 +129,8 @@ public class WishlistJDBCIT {
                 .extracting(Wishlist::getName, Wishlist::getDescription, Wishlist::getId)
                 .containsExactly(name, description, wishlist.getId());
 
-    }*/
-
+    }
+/*
     private int getWishIdFromDB(Wish wish) {
         int wishId;
         try (Connection con = DriverManager.getConnection(db_url, username, pw)){
@@ -105,5 +172,5 @@ public class WishlistJDBCIT {
                 .extracting(Wish::getName, Wish::getDescription, Wish::getPrice, Wish::getUrl)
                 .containsExactly(testWish.getName(), testWish.getDescription(), testWish.getPrice(), testWish.getUrl());
     }
-
+*/
 }
