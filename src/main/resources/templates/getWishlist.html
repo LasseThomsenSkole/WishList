@@ -30,12 +30,14 @@
         <td th:text="${Wish.getDescription()}">Description</td>
         <td th:text="${Wish.getPrice()}">Price</td>
         <td th:block th:if="${Wish.getUrl() != null}">
-            <a th:href="@{${Wish.getUrl()}}">link til ønsket</a>>Link</td>
+            <a th:href="@{${Wish.getUrl()}}">link til ønsket</a></td>
         <td>
             <a th:href="@{'/wishlist/' + ${wishlist.id} + '/edit'}">Edit</a> |
-            <form th:action="@{'/wishlist/' + ${wishlist.id} + '/delete-wishlist'}" method="post" style="display:inline;">
+            <form th:action="@{'/wishlist/' + ${Wish.id} + '/delete-wish'}" method="post" style="display:inline;">
+                <input type="hidden" name="wishlistId" th:value="${wishlist.id}" />
                 <button type="submit">Delete</button>
             </form>
+
         </td>
     </tr>
     </tbody>

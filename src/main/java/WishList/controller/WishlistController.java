@@ -97,10 +97,10 @@ public class WishlistController {
     }
 
     /** Slet fra ønskeliste **/
-    @DeleteMapping("/{wishID}/delete-wish")
-    public String deleteWish(@PathVariable int wishID){
+    @PostMapping("/{wishID}/delete-wish")
+    public String deleteWish(@PathVariable int wishID, @RequestParam("wishlistId") int wishlistId){
          service.deleteWish(wishID);
-        return "redirect:getWishlist"; // todo: skal det være return "redirect:/wishlist/" + wishlistId; ??
+        return "redirect:/wishlist/" + wishlistId; // todo: skal det være return "redirect:/wishlist/" + wishlistId; ??
     }
 
     /** Slet ønskeliste **/
