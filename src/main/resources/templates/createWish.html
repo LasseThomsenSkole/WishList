@@ -9,7 +9,7 @@
 <div class="container-ting">
     <span class="container-title">Tilføj Ønske</span>
 
-    <form class="input-form" method="post" th:action="@{'/wishlist/' + ${wishlistID} + '/createWish'}" th:object="${wish}">
+    <form class="input-form" method="post" th:action="@{'/wishlist/' + ${wishlistID} + '/createWish/save'}" th:object="${wish}">
     <label for="product-name">Produkt navn</label>
     <input class="input" required id="product-name" th:field="*{name}">
     <label for="product-description">Beskrivelse af produktet</label>

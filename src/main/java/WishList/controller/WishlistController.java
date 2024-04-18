@@ -72,7 +72,7 @@ public class WishlistController {
     }
 
     @PostMapping("/{wishlistID}/createWish/save") //skal lige fikse redirect + så man ikke kan have samme username og password
-    public String postWish(Wish wish, int wishlistID){
+    public String postWish(@ModelAttribute Wish wish, @PathVariable int wishlistID){
         service.insertWish(wish, wishlistID);
         return "redirect:/wishlist/" + wishlistID;
     }
