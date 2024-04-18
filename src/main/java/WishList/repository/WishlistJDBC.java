@@ -1,8 +1,7 @@
 package WishList.repository;
 import WishList.model.Wish;
 import WishList.model.Wishlist;
-import WishList.model.User;
-import WishList.service.LoginSampleException;
+import WishList.model.User;;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -13,7 +12,7 @@ import java.util.List;
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
     private String username = "root";
-    private String pw = "";
+    private String pw = "Andrea1999!";
 
     //TODO til forside
     public List<Wishlist> getWishlistsByUserId(int userId) { //den virker
