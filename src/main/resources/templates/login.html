@@ -10,9 +10,9 @@
 <form th:action="@{/wishlist/login}" th:object="${user}" class="create-form" method="post">
     <div class="form-group">
         <h1 class="wishlist-title">Wishlist</h1>
-        <label class="create-form-label" for="username">Brugernavn</label>
+        <label class="create-form-label" for="name">Brugernavn</label>
         <br>
-        <input class="create-text-input" type="text" id="username" th:field="*{username}" required>
+        <input class="create-text-input" type="text" id="name" th:field="*{name}" required>
         <br><br>
     </div>
     <div class="form-group">

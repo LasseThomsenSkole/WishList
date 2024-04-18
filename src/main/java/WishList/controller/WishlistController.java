@@ -26,9 +26,9 @@ public class WishlistController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute User user) {
-        Integer userId = service.authenticateUserAndGetId(user.getUsername(), user.getPassword());
-        return "redirect:/wishlist/" + userId + "/homepage";
+    public String login(@ModelAttribute User user, @RequestParam("name") String name, @RequestParam("password") String password) {
+        Integer userID = service.authenticateUserAndGetId(name, password);
+        return "redirect:/wishlist/" + userID + "/homepage";
     }
 
     /** user Forside **/

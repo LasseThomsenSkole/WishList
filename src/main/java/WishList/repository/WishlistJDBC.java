@@ -12,7 +12,7 @@ import java.util.List;
 public class WishlistJDBC {
     private final String db_url = "jdbc:mysql://localhost:3306/WishlistDB"; //ik hardcode det her hvis vi kan det få det til at fungere uden
     private final String username = "root";
-    private final String pw = "root";
+    private final String pw = ".KasperNikolaj4576";
 
     //TODO til forside
     public List<Wishlist> getWishlistsByUserId(int userId) {
@@ -166,7 +166,7 @@ public class WishlistJDBC {
                     "INSERT INTO Users (name, password)" +
                     " VALUES ( ?, ?)";
             PreparedStatement ps = con.prepareStatement(SQL);
-            ps.setString(1, user.getUsername());
+            ps.setString(1, user.getName());
             ps.setString(2, user.getPassword());
             ps.executeUpdate();
             return user;
