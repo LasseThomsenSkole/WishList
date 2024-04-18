@@ -108,13 +108,13 @@ public class WishlistController {
     public String deleteWishlist (@PathVariable int wishlistID) {
         int userID = service.getUserIDFromWishlistID(wishlistID);
         service.deleteWishlist(wishlistID);
-        return "redirect:/" + userID +"/homepage";
+        return "redirect:/wishlist/" + userID +"/homepage";
     }
 
     /**Opret Profil**/
 
     @GetMapping("/createProfile")
-    public String createProfile( Model model){
+    public String createProfile(Model model){
         model.addAttribute("user", new User());
         return "createProfile";
     }

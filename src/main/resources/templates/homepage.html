@@ -32,6 +32,7 @@
         <td>
             <a th:href="@{'/wishlist/' + ${wishlist.id}}" class="button delete-button">Se ønsker</a> |
             <form th:action="@{'/wishlist/' + ${wishlist.id} + '/delete-wishlist'}" method="post" style="display:inline;">
+                <input type="hidden" name="wishlistId" th:value="${wishlist.id}"/>
                 <button type="submit" class="button delete-button">Slet</button>
             </form>
         </td>
