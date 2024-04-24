@@ -11,7 +11,7 @@ Wishlist er et website, der giver brugeren mulighed for at oprette og administre
 - **Brugeroprettelse og -login:** Brugere kan oprette en konto og logge ind med brugernavn og kodeord.
 - **Oprettelse af ønskelister:** Brugere kan oprette ønskelister med titel og beskrivelse af ønskelisten.
 - **Tilføjelse af ønsker:** Brugere kan tilføje ønsker til deres ønskelister med oplysninger som navn, beskrivelse, pris og valgfrit link.
-- **Redigering og sletning:** Brugere kan redigere og slette ønskelister. Brugere kan redigere og slette ønsker fra deres ønskelister.
+- **Redigering og sletning:** Brugere kan redigere og slette ønskelister. Brugere kan redigere og slette ønsker.
 
 ### Teknologier
 
